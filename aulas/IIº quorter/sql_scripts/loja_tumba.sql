@@ -121,7 +121,62 @@ insert into encomendas_produtos(id,qtd, valor, id_encomenda,id_produto)
 values (14,500,qtd*99.99,106,7);
 select*from encomendas_produtos;
 
+use loja_tumba;
 
+select genero, count(*) as total from clientes group by genero;
+
+select * from clientes, encomenda where clientes.id = encomenda.id_cliente;
+
+select * from clientes as c, encomenda as e where c.id = e.id_cliente;
+
+SELECT * FROM clientes inner join(encomenda) on clientes.id = encomenda.id_cliente;
+
+
+
+create table alunos(
+    id int PRIMARY key AUTO_INCREMENT,
+    nome VARCHAR(20),
+    sexo enum("M", "F"),
+    provincia VARCHAR(30)
+);
+
+create table notas(
+     id int PRIMARY key AUTO_INCREMENT,
+     valor DECIMAL(10,1),
+     id_aluno int, 
+     Foreign Key (id_aluno) REFERENCES alunos(id)
+);
+
+
+insert into alunos(nome, sexo, provincia) values ("Pedro", 1, "Cabinda"), ("Rosa", 2, "Luanda"),
+(
+    "Tina",
+    2,
+    "Zaire"
+),
+(
+    "Paulo",
+    1,
+    "Namibe"
+)
+
+insert into notas (id_aluno,valor) values (1,9),(2,10),(4,8),(null,10)
+
+SELECT * from alunos inner join notas on alunos.id = notas.id_aluno;
+SELECT * from alunos left join notas on alunos.id = notas.id_aluno;
+
+SELECT * from alunos right join notas on alunos.id = notas.id_aluno;
+
+
+SELECT * FROM produtos, clientes, encomendas_produtos inner join encomenda on clientes.id = encomenda.id_cliente inner join encomendas_produtos on encomendas_produtos.id_produto = produtos.id;
+
+
+SELECT * from encomenda where valor = (SELECT min(valor) from encomenda)
+
+
+SELECT id, nome from clientes where id not in (SELECT id_cliente from encomenda where estado like "Em Processamento")
+
+SELECT id, nome from clientes as c where not EXISTS (SELECT * from encomenda WHERE c.id = id_cliente);
 
  
  
