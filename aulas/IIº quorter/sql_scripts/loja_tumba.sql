@@ -214,7 +214,25 @@ FROM encomendas_produtos ep
 JOIN produtos p ON ep.id_produto = p.id
 JOIN encomenda e on ep.id_encomenda = e.id
  
- 
+
+create view qnt_produto_view as SELECT id, nome from clientes as c where not EXISTS (SELECT * from encomenda WHERE c.id = id_cliente);
+
+
+SELECT * FROM qnt_produto_view;
+create view encomendas_processadas as SELECT e.id as encomenda_id, e.estado from encomenda e WHERE e.estado="Processada";
+
+SELECT * FROM encomendas_processadas;
+
+
+
+/*-------------------------TPC----------------------*/
+
+/*
+
+1. use a bd GCBD;
+2. crie uma view d produts e suas respectivas vategorias. Na view deve constar o ID, nome do produto, nome da categora e preco;
+3. Crie uma view de nome da "EncomendasCarlos" q mostre todas as encomendas (e seus respectivos detlhes) processadas pelo funcionario Carlos. Use subconsultas smpr q necessario;
+4. Crie uma view d nome Diario_de_Caixa q mostre o total d faturamento por dia.
 
 
 
