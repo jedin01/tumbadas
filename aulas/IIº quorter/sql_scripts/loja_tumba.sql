@@ -235,6 +235,10 @@ SELECT * FROM encomendas_processadas;
 4. Crie uma view d nome Diario_de_Caixa q mostre o total d faturamento por dia.
 
 
+*/
 
+
+create PROCEDURE PA_Enc_Cancel() BEGIN SELECT * from encomenda WHERE estado LIKE 'Cancelada';
+CALL PA_Enc_Cancel();
 
 
