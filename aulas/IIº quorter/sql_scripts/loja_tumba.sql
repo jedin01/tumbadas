@@ -178,6 +178,41 @@ SELECT id, nome from clientes where id not in (SELECT id_cliente from encomenda 
 
 SELECT id, nome from clientes as c where not EXISTS (SELECT * from encomenda WHERE c.id = id_cliente);
 
+// primeira questao
+
+SELECT *
+FROM clientes  c
+JOIN encomenda e ON c.id = e.id_cliente
+JOIN encomendas_produtos ep ON ep.id_encomenda = e.id
+JOIN produtos p on ep.id_produto = p.id;
+
+// segunda questao
+
+SELECT p.nome as produtos, p.preco, ep.qtd as quantidade
+FROM encomendas_produtos ep
+JOIN produtos p ON ep.id_produto = p.id
+JOIN encomenda e on ep.id_encomenda = e.id
+WHERE e.valor = 5500;
+
+
+// tds os produtos pertencentes à encomenda cujo valor = 35k
+
+// terceira questao 
+
+SELECT c.nome AS cliente, p.nome AS produto, e.estado
+FROM encomendas_produtos eps
+JOIN encomenda e ON eps.id_encomenda = e.id
+JOIN clientes c ON e.id_cliente = c.id
+JOIN produtos p on eps.id_produto = p.id
+JOIN encomendas_produtos ep ON p.id = eps.id_produto
+WHERE e.estado = "Em Processamento";
+
+// quarta questao
+
+SELECT p.nome as produtos, ep.qtd as quantidade, e.id as encomenda_id
+FROM encomendas_produtos ep
+JOIN produtos p ON ep.id_produto = p.id
+JOIN encomenda e on ep.id_encomenda = e.id
  
  
 
