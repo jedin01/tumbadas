@@ -238,7 +238,11 @@ SELECT * FROM encomendas_processadas;
 */
 
 
+
+DELIMITER;
 create PROCEDURE PA_Enc_Cancel() BEGIN SELECT * from encomenda WHERE estado LIKE 'Cancelada';
+END;
+DELIMITER;
 CALL PA_Enc_Cancel();
 
 
