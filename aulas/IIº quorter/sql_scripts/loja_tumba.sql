@@ -245,4 +245,59 @@ END;
 DELIMITER;
 CALL PA_Enc_Cancel();
 
+create table categorias(
+    id int PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(30),
+);
+CREATE table funcionarios(
+    id int PRIMARY KEY AUTO_INCREMENT,
+    pnome VARCHAR(30),
+    email VARCHAR(30)
+    
+);
+
+INSERT INTO funcionarios(pnome) VALUES("Carlos");
+
+
+/************************************/
+
+// primeiro caso
+
+CREATE VIEW Produtos_Categorias AS
+SELECT 
+    p.id AS ID, 
+    p.nome AS Nome_Produto, 
+    c.nome AS Nome_Categoria, 
+    p.preco AS Preco
+FROM produtos p
+JOIN categorias c ON p.id_categoria = c.id;
+
+//segundo caso
+
+CREATE VIEW EncomendasCarlos as
+SELECT
+    f.pnome as Funcionario_Nome,
+    e.id AS ID_Encomenda, 
+    e.data, 
+    c.nome AS Cliente, 
+    p.nome AS Produto,
+    ep.qtd as Qunatidade,
+    f.pnome as Funcionario_Nome,
+    p.preco
+FROM encomenda e
+JOIN encomendas_produtos ep ON e.id = ep.id_encomenda
+JOIN produtos p ON ep.id_produto = p.id
+JOIN clientes c ON e.id_cliente = c.id
+JOIN funcionarios f ON e.id_funcionario = f.id
+WHERE e.id_funcionario = (SELECT id FROM funcionarios WHERE f.pnome = 'Carlos');
+
+// terceiro caso
+
+CREATE VIEW Diario_de_Caixa as 
+SELECT 
+    data AS Data,
+    SUM(ep.qtd * ep.valor) AS Total_Faturamento
+FROM encomenda e
+JOIN encomendas_produtos ep ON e.id = ep.id_encomenda
+GROUP BY data;
 
