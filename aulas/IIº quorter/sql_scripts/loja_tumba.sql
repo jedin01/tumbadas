@@ -274,22 +274,21 @@ JOIN categorias c ON p.id_categoria = c.id;
 
 //segundo caso
 
-CREATE VIEW EncomendasCarlos as
+CREATE VIEW EncomendasCarlos as 
 SELECT
-    f.pnome as Funcionario_Nome,
     e.id AS ID_Encomenda, 
-    e.data, 
+    f.pnome AS Funcionario,
     c.nome AS Cliente, 
     p.nome AS Produto,
-    ep.qtd as Qunatidade,
-    f.pnome as Funcionario_Nome,
-    p.preco
+    ep.qtd as Quantidade,
+    p.preco as Preco,
+    e.data as Data
 FROM encomenda e
 JOIN encomendas_produtos ep ON e.id = ep.id_encomenda
 JOIN produtos p ON ep.id_produto = p.id
 JOIN clientes c ON e.id_cliente = c.id
 JOIN funcionarios f ON e.id_funcionario = f.id
-WHERE e.id_funcionario = (SELECT id FROM funcionarios WHERE f.pnome = 'Carlos');
+WHERE f.pnome = 'Abner';
 
 // terceiro caso
 
