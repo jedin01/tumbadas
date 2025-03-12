@@ -300,3 +300,43 @@ FROM encomenda e
 JOIN encomendas_produtos ep ON e.id = ep.id_encomenda
 GROUP BY data;
 
+
+/******* mar12 14:04 *******/
+
+CREATE DATABASE login;
+
+use login;
+
+create table login (
+    id int PRIMARY KEY AUTO_INCREMENT,
+    nome_utilizador VARCHAR(30),
+    senha VARCHAR(30)
+);
+
+insert into login (nome_utilizador, senha) values ('abnerLOuren', 'admin');
+
+use login;
+
+// first one
+
+CREATE PROCEDURE fazer_login(
+    IN user VARCHAR(255), 
+    IN pass VARCHAR(255),
+    OUT msg VARCHAR(10)
+)
+BEGIN
+    DECLARE existe INT;
+    
+    SELECT COUNT(*) INTO existe 
+    FROM login 
+    WHERE nome_utilizador = user AND senha = pass;
+    
+    IF existe > 0 THEN
+        SET msg = 'Sucesso';
+    ELSE
+        SET msg = 'Erro';
+    END IF;
+END
+
+CALL fazer_login('h', 'admin', @msg);
+SELECT @msg;
