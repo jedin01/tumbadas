@@ -340,3 +340,66 @@ END
 
 CALL fazer_login('h', 'admin', @msg);
 SELECT @msg;
+
+
+//second one
+
+
+CREATE TABLE alunos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE disciplinas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    total_inscritos INT DEFAULT 0
+);
+
+CREATE TABLE inscricoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    aluno_id INT,
+    disciplina_id INT,
+    FOREIGN KEY (aluno_id) REFERENCES alunos(id) ON DELETE CASCADE,
+    FOREIGN KEY (disciplina_id) REFERENCES disciplinas(id) ON DELETE CASCADE
+);
+
+DELIMITER $$
+
+CREATE PROCEDURE gerir_inscricao(
+    IN operacao TINYINT, 
+    IN aluno_id INT, 
+    IN disciplina_id INT
+)
+BEGIN
+    DECLARE total_alunos INT;
+
+    CASE 
+        WHEN operacao = 1 THEN
+            INSERT INTO inscricoes (aluno_id, disciplina_id)
+            VALUES (aluno_id, disciplina_id);
+        WHEN operacao = 0 THEN
+            DELETE FROM inscricoes 
+            WHERE aluno_id = aluno_id AND disciplina_id = disciplina_id;
+    END CASE;
+    
+    SELECT COUNT(*) INTO total_alunos FROM inscricoes WHERE disciplina_id = disciplina_id;
+    
+    UPDATE disciplinas 
+    SET total_inscritos = total_alunos 
+    WHERE id = disciplina_id;
+END
+
+DELIMITER ;
+
+INSERT INTO alunos (nome) VALUES ('João'), ('Maria'), ('Pedro');
+INSERT INTO disciplinas (nome) VALUES ('Matemática'), ('História'), ('Física');
+
+CALL gerir_inscricao(1, 1, 1);
+CALL gerir_inscricao(1, 2, 1);
+CALL gerir_inscricao(1, 3, 2);
+CALL gerir_inscricao(0, 1, 1);
+
+SELECT * FROM alunos;
+SELECT * FROM disciplinas;
+SELECT * FROM inscricoes;
