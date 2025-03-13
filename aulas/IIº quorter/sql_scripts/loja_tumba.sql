@@ -403,3 +403,39 @@ CALL gerir_inscricao(0, 1, 1);
 SELECT * FROM alunos;
 SELECT * FROM disciplinas;
 SELECT * FROM inscricoes;
+
+create PROCEDURE atualizar_preco(
+    valor float(10,2)
+)
+begin
+    UPDATE produtos SET preco = preco+(preco*valor);
+END
+
+create PROCEDURE atualizar_preco3(
+    i int,
+    valor float(10,2),
+    OUT p float(10,2)
+)
+begin
+    UPDATE produtos SET preco = preco+(preco*valor)
+    WHERE id = i;
+    set p = (SELECT preco FROM produtos WHERE id = i);
+END;
+
+CALL atualizar_preco3 (1, 10, @c);
+
+SELECT @c as "Preco atual";
+
+create PROCEDURE atualizar_preco4(
+    i int,
+    valor float(10,2),
+    OUT p float(10,2)
+)
+begin
+    IF(i<10) THEN
+    UPDATE produtos SET preco = preco-2;
+    ELSE
+    UPDATE produtos SET preco = preco-10;
+    end if;
+    set p = (SELECT preco FROM produtos WHERE id = i);
+END;
