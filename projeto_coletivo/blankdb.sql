@@ -201,3 +201,45 @@ INSERT INTO vendaProduto (idVenda, idProduto, quantidade, precoUnitario) VALUES
 (4, 4, 2, 2200.00),
 (5, 5, 4, 1500.00);
 
+
+create VIEW top_tres_produtos as
+SELECT p.nome AS produto, SUM(vp.quantidade) AS total_vendido
+FROM vendaProduto vp
+JOIN produtos p ON vp.idProduto = p.id
+GROUP BY p.id
+ORDER BY total_vendido DESC
+LIMIT 3;
+
+SELECT * FROM top_tres_produtos;
+
+create view vendas_mensais AS
+SELECT DATE_FORMAT(v.data, '%Y-%m') AS mes, SUM(v.valorTotal) AS total
+FROM vendas v
+GROUP BY mes
+ORDER BY mes DESC;
+
+SELECT * FROM vendas_mensais;
+
+create view total_disponivel as
+SELECT p.nome as estoque, SUM(e.quantidade - e.quantidadeVendida) AS total_disponivel
+FROM estoques e
+JOIN produtos p on e.idProduto = p.id
+GROUP BY estoque
+ORDER BY estoque DESC;
+SELECT * FROM total_disponivel;
+
+create view melhores_clientes as
+SELECT c.pNome, c.uNome, SUM(vp.quantidade) AS total_comprado
+FROM vendas v
+JOIN clientes c ON v.idCliente = c.id
+JOIN vendaProduto vp ON v.id = vp.idVenda
+GROUP BY c.id
+HAVING total_comprado > 3;
+SELECT * FROM melhores_clientes;
+
+create view produtos_categarias as
+SELECT p.nome AS produto, c.nome AS categoria
+FROM produtos p
+JOIN categorias c ON p.idCategoria = c.id;
+
+SELECT * FROM produtos_categarias;
