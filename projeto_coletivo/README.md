@@ -18,3 +18,37 @@ Algures na cidade de Luanda, muncípio de Viana, certa farmâcia tem enfrentado 
 **vendas** (id, idFuncionario, idCliente, investimento, valorTotal, troco, data) </br>
 **vendaProduto** (id, idvenda, idProduto, quantidade, precoUnitario) </br>
 
+
+### Normalização
+
+## **1ª Forma Normal (1FN) - Sem grupos repetitivos**  
+A **1FN** exige que cada coluna armazene apenas valores atômicos e que não existam grupos repetitivos.  
+
+### **Como as tabelas atendem à 1FN?**
+- Cada campo armazena apenas um único valor por linha.  
+- Telefones de funcionários, clientes e fornecedores foram colocados em tabelas separadas (`telefoneFuncionarios`, `telefoneClientes` e `telefoneFornecedores`), em vez de permitir múltiplos números numa única célula.  
+- A tabela `vendaProduto` foi criada para evitar listas de produtos dentro da `vendas`.  
+
+---
+
+## **2ª Forma Normal (2FN) - Sem dependências parciais da chave primária**  
+A **2FN** exige que **todas as colunas não-chave dependam completamente da chave primária**.  
+
+### **Como as tabelas atendem à 2FN?**  
+- `telefoneFuncionarios`, `telefoneClientes` e `telefoneFornecedores` possuem **chaves estrangeiras** (`idFuncionario`, `idCliente`, `idFornecedor`), garantindo que os telefones pertencem exatamente a um registro principal.  
+- `vendaProduto` relaciona `vendas` e `produtos`, evitando que os produtos fiquem diretamente na tabela `vendas`.  
+- `estoques`, `entradas` e `saidas` têm relação direta com `produtos` e armazenam **apenas dados necessários**, evitando informações duplicadas.  
+
+Nenhuma tabela contém colunas que só fazem sentido para parte da chave primária.  
+
+---
+
+## **3ª Forma Normal (3FN) - Sem dependências transitivas**  
+A **3FN** elimina dependências transitivas, ou seja, **uma coluna não pode depender de outra coluna que não seja a chave primária**.  
+
+### **Como as tabelas atendem à 3FN?**  
+- `produtos` faz referência a `categorias` por meio do `idCategoria`. Assim, se precisar mudar o nome ou descrição de uma categoria, basta editar um único local, sem precisar repetir esse dado em cada produto.  
+- `vendas` guarda apenas `idFuncionario` e `idCliente`, sem armazenar os nomes diretamente (que já existem nas tabelas `funcionarios` e `clientes`).  
+- `estoques`, `entradas` e `saidas` relacionam apenas `idProduto`, sem armazenar nome ou preço, pois esses dados já estão em `produtos`.  
+
+
