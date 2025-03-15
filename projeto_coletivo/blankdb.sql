@@ -1,4 +1,6 @@
--- Active: 1735083155981@@127.0.0.1@3306@blank
+create DATABASE blank;
+
+use blank;
 
 CREATE TABLE funcionarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -202,6 +204,40 @@ INSERT INTO vendaProduto (idVenda, idProduto, quantidade, precoUnitario) VALUES
 (5, 5, 4, 1500.00);
 
 
+/* 
+A inserção de dados deve fazer sentido...
+Os dados do preçoUnitário para o valorTotal com a quantidade não batem
+Verifique a consulta abaixo
+...O precoUnitário no vendaproduto é para q? -_-?
+PQ que o precoUnitário tem o mesmo valor do preco dos produtos?? Redundancia??
+Talvez o precoUnitário devesse ser o preco do produto*a quantidade
+Assim teriamos o valor total do mesmo produto e teriamos em conta que poderia ter mais produtos para dar um valorTotal que está na tabela vendas
+Porque o valorTotal da tabela produtos é o valor total de toda a compra
+*/
+
+CREATE VIEW registro_vendas as
+SELECT v.id as venda,f.`pNome`as funcionario, 
+c.`pNome` as cliente, p.`nome` as produto, 
+vp.quantidade, vp.`precoUnitario`, 
+v.`valorTotal`, v.investimento,
+v.troco, v.`data`
+from funcionarios f 
+JOIN vendas v on f.id = v.idFuncionario
+JOIN clientes c on c.id = v.idCliente
+JOIN vendaproduto vp on v.id = vp.idVenda
+JOIN produtos p on p.id = vp.idProduto;
+
+CREATE VIEW registro_entradas as
+SELECT f.`pNome` as fornecedor, p.nome as 'produto fornecido', 
+c.nome as 'categoria do produto', e.quantidade as 'quantidade fornecida',
+e.data as 'data entrada'
+from entradas e 
+JOIN produtos p on p.id = e.`idProduto`
+JOIN categorias c on c.id = p.`idCategoria`
+JOIN fornecedores f on f.id = e.`idFornecedor`; 
+
+
+
 create VIEW top_tres_produtos as
 SELECT p.nome AS produto, SUM(vp.quantidade) AS total_vendido
 FROM vendaProduto vp
@@ -216,8 +252,7 @@ create view vendas_mensais AS
 SELECT DATE_FORMAT(v.data, '%Y-%m') AS mes, SUM(v.valorTotal) AS total
 FROM vendas v
 GROUP BY mes
-ORDER BY mes DESC;
-
+ORDER BY total DESC;
 SELECT * FROM vendas_mensais;
 
 create view total_disponivel as
