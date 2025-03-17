@@ -412,23 +412,13 @@ VALUES (1, 1, 2, 1200.00),
     (4, 4, 2, 2200.00),
     (5, 5, 4, 1500.00);
 
-/* 
-A inserção de dados deve fazer sentido...
-Os dados do preçoUnitário para o valorTotal com a quantidade não batem
-Verifique a consulta abaixo
-...O precoUnitário no vendaproduto é para q? -_-?
-PQ que o precoUnitário tem o mesmo valor do preco dos produtos?? Redundancia??
-Talvez o precoUnitário devesse ser o preco do produto*a quantidade
-Assim teriamos o valor total do mesmo produto e teriamos em conta que poderia ter mais produtos para dar um valorTotal que está na tabela vendas
-Porque o valorTotal da tabela produtos é o valor total de toda a compra
-*/
 
-/*---------------------------------------------*/
+/*-------------------------------------------------------------------------------*/
 
 /*
 Esta consulta retorna a quantidade total do produto "Paracetamol" 
-vendido pelo funcionário "Abner Lourenço", que foi fornecido pelo fornecedor 
-"André Monteiro", no dia 10 de Março de 2025. O resultado inclui o nome do funcionário, o nome 
+vendido pelo funcionário "Abner", que foi fornecido pelo fornecedor 
+"André", no dia 10 de Março de 2025. O resultado inclui o nome do funcionário, o nome 
 do fornecedor, o nome do produto, a quantidade total vendida e a data da venda.
 */
 
@@ -444,7 +434,7 @@ FROM
     JOIN vendaProduto vp ON v.id = vp.idVenda
     JOIN produtos p ON vp.idProduto = p.id
     JOIN entradas e ON p.id = e.idProduto
-    AND e.idFornecedor = 1 -- Fornecedor correto
+    AND e.idFornecedor = 1
     JOIN fornecedores fornec ON e.idFornecedor = fornec.id
 WHERE
     p.nome = 'Paracetamol'
@@ -459,8 +449,6 @@ GROUP BY
     p.nome,
     v.data;
 
-/*---------------------------------------------*/
-
 /*
 Essa consulta retorna a quantidade total 
 de produtos vendidos por cada funcionário dentro do 
@@ -468,18 +456,74 @@ período entre 10 de março de 2025 e 15 de março de 2025.
 */
 
 SELECT
-f.pNome AS funcionario_nome,
-SUM(vp.quantidade) AS total_vendido,
-MIN(v.data) AS data_inicial,
-MAX(v.data) AS data_final
+    f.pNome AS funcionario_nome,
+    SUM(vp.quantidade) AS total_vendido,
+    MIN(v.data) AS data_inicial,
+    MAX(v.data) AS data_final
 FROM
-funcionarios f
-JOIN vendas v ON f.id = v.idFuncionario
-JOIN vendaProduto vp ON v.id = vp.idVenda
+    funcionarios f
+    JOIN vendas v ON f.id = v.idFuncionario
+    JOIN vendaProduto vp ON v.id = vp.idVenda
 WHERE
-v.data BETWEEN '2025-03-10' AND '2025-03-15'
+    v.data BETWEEN '2025-03-10' AND '2025-03-15'
 GROUP BY
-f.pNome,
-f.uNome;
+    f.pNome,
+    f.uNome;
 
-/*---------------------------------------------*/
+
+/*
+    Essa consulta identifica o funcionário que mais vendeu Ibuprofeno à cliente Tatiana no mês de Março de 2025. 
+    Ela mostra o primeiro nome do funcionario, soma a quantidade vendida e ordena os resultados 
+    em ordem decrescente, retornando apenas o funcionário com o maior total de vendas.
+*/
+
+SELECT
+    f.pNome AS funcionario_nome,
+    p.nome AS produto_nome,
+    SUM(vp.quantidade) AS total_vendido
+FROM
+    funcionarios f
+    JOIN vendas v ON f.id = v.idFuncionario
+    JOIN vendaProduto vp ON v.id = vp.idVenda
+    JOIN produtos p ON vp.idProduto = p.id
+    JOIN clientes c on v.`idCliente`= c.id
+WHERE
+    p.nome = 'Ibuprofeno'
+    AND c.pNome = 'Tatiana'
+     AND v.data BETWEEN '2025-03-01' AND '2025-03-31'
+GROUP BY
+    f.pNome,
+    p.nome,
+    DATE(v.data)
+ORDER BY total_vendido DESC
+LIMIT 1;
+
+
+/*
+    Esta consulta SQL identifica os três produtos mais vendidos 
+    e os clientes que mais compraram esses produtos, ordenando os 
+    resultados por produto e pela quantidade comprada.
+*/
+
+SELECT
+    tp.produto_nome,
+    c.pNome AS cliente_nome,
+    SUM(vp.quantidade) AS total_comprado
+FROM
+    (SELECT 
+        p.id AS produto_id, 
+        p.nome AS produto_nome
+     FROM produtos p
+     JOIN vendaProduto vp ON p.id = vp.idProduto
+     JOIN vendas v ON vp.idVenda = v.id
+     GROUP BY p.id, p.nome
+     ORDER BY SUM(vp.quantidade) DESC
+     LIMIT 3) AS tp
+    JOIN vendaProduto vp ON tp.produto_id = vp.idProduto
+    JOIN vendas v ON vp.idVenda = v.id
+    JOIN clientes c ON v.idCliente = c.id
+GROUP BY
+    tp.produto_nome, c.pNome
+ORDER BY
+    tp.produto_nome, total_comprado DESC;
+
