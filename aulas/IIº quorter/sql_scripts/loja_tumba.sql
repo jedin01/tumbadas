@@ -392,6 +392,74 @@ END
 
 DELIMITER ;
 
+//Third one
+
+CREATE DATABASE BD_RH;
+USE BD_RH;
+
+CREATE TABLE Departamentos (
+    id_departamento INT PRIMARY KEY,
+    nome_departamento VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Funcionarios (
+    id_funcionario INT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    salario DECIMAL(10,2) NOT NULL CHECK (salario > 0),
+    id_departamento INT,
+    FOREIGN KEY (id_departamento) REFERENCES Departamentos(id_departamento) ON DELETE SET NULL
+);
+
+DELIMITER $$
+
+CREATE PROCEDURE DarBonificacao(
+    IN p_valor_base INT,         -- Valor fixo da bonificação
+    IN p_limite INT,             -- Quantidade máxima de aumentos
+    IN p_id_departamento INT     -- Departamento a ser bonificado
+)
+BEGIN
+    DECLARE v_contador INT DEFAULT 0;   -- Controla quantas vezes o salário foi aumentado
+    DECLARE v_total_funcionarios INT;   -- Guarda a quantidade de funcionários afetados
+
+    -- Verificar quantos funcionários serão afetados
+    SELECT COUNT(*) INTO v_total_funcionarios
+    FROM Funcionarios
+    WHERE id_departamento = p_id_departamento;
+
+    -- Caso não haja funcionários no departamento, lançar um erro
+    IF v_total_funcionarios = 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Erro: Nenhum funcionário encontrado no departamento informado.';
+    END IF;
+
+    -- Aplicar bonificação enquanto não atingir o limite
+    WHILE v_contador < p_limite DO
+        UPDATE Funcionarios
+        SET salario = salario + p_valor_base
+        WHERE id_departamento = p_id_departamento;
+
+        SET v_contador = v_contador + 1;
+    END WHILE;
+
+    -- Exibir mensagem de sucesso
+    SELECT CONCAT('Bonificação aplicada ', p_limite, ' vezes no departamento ', p_id_departamento) AS Mensagem;
+END $$
+
+DELIMITER ;
+
+-- Inserir departamentos
+INSERT INTO Departamentos (id_departamento, nome_departamento) VALUES
+(1, 'TI'),
+(2, 'Recursos Humanos');
+
+-- Inserir funcionários
+INSERT INTO Funcionarios (id_funcionario, nome, salario, id_departamento) VALUES
+(101, 'Carlos Silva', 10000, 1),
+(102, 'Maria Santos', 12000, 1),
+(103, 'João Pereira', 9000, 2);
+
+CALL DarBonificacao(100, 3, 1);
+
 INSERT INTO alunos (nome) VALUES ('João'), ('Maria'), ('Pedro');
 INSERT INTO disciplinas (nome) VALUES ('Matemática'), ('História'), ('Física');
 
