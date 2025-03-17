@@ -527,3 +527,47 @@ GROUP BY
 ORDER BY
     tp.produto_nome, total_comprado DESC;
 
+/*----------------------------------------------------------*/
+
+/*
+    Esta consulta identifica a venda de maior valor realizada pelo 
+    funcionário Crismélio para a cliente Natália.
+*/
+
+SELECT 
+    v.id AS venda_id,
+    c.pNome AS cliente_nome,
+    f.pNome AS funcionario_nome,
+    SUM(vp.quantidade * p.preco) AS valor_total
+FROM 
+    vendas v
+    JOIN clientes c ON v.idCliente = c.id
+    JOIN funcionarios f ON v.idFuncionario = f.id
+    JOIN vendaProduto vp ON v.id = vp.idVenda
+    JOIN produtos p ON vp.idProduto = p.id
+WHERE 
+    c.pNome = 'Natália' 
+    AND f.pNome = 'Crismélio'
+GROUP BY 
+    v.id, c.pNome, f.pNome
+ORDER BY 
+    valor_total DESC
+LIMIT 1;
+
+/*
+    Esta consulta identifica o funcionário com o maior faturamento total em vendas. 
+*/
+
+SELECT 
+    f.pNome AS funcionario_nome,
+    SUM(vp.quantidade * p.preco) AS total_faturado
+FROM 
+    funcionarios f
+    JOIN vendas v ON f.id = v.idFuncionario
+    JOIN vendaProduto vp ON v.id = vp.idVenda
+    JOIN produtos p ON vp.idProduto = p.id
+GROUP BY 
+    f.pNome
+ORDER BY 
+    total_faturado DESC
+LIMIT 1;
