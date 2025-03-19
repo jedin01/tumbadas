@@ -413,7 +413,7 @@ VALUES (1, 1, 2, 1200.00),
     (5, 5, 4, 1500.00);
 
 
-/*-------------------------------------------------------------------------------*/
+
 
 /*
 Esta consulta retorna a quantidade total do produto "Paracetamol" 
@@ -527,7 +527,6 @@ GROUP BY
 ORDER BY
     tp.produto_nome, total_comprado DESC;
 
-/*----------------------------------------------------------*/
 
 /*
     Esta consulta identifica a venda de maior valor realizada pelo 
@@ -571,3 +570,5 @@ GROUP BY
 ORDER BY 
     total_faturado DESC
 LIMIT 1;
+
+
