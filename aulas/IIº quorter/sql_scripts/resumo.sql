@@ -64,4 +64,35 @@ VALUES (
         'VIEWS E PROCEDIMENTOS ARMAZENADOS',
         'X'
     );
+
+
 SELECT * from unidades;
+--Primeira tarefa que o prof deixou
+CREATE view perguntas_respostas_cada_unidade_view as
+SELECT * from unidades u 
+join questoes q ON u.id = q.id_unidade
+join respostas r ON q.id = r.id_questoes;
+
+--Segunda tarefa que o prof deixou
+DELIMITER \\
+CREATE Procedure insercao
+(u VARCHAR(5),
+q VARCHAR(30),
+an VARCHAR(30),
+obss VARCHAR(30))
+    BEGIN
+        INSERT INTO questoes (pergunta, id_unidade) 
+        VALUES (q, u);
+        
+        SET @questoes_id = LAST_INSERT_ID();
+        
+        INSERT INTO respostas (resposta, id_questoes) 
+        VALUES (an, @questoes_id);
+        INSERT INTO obs (conteudo, id_questoes) 
+        VALUES (obss, @questoes_id);
+    END \\
+DELIMITER ;
+CALL insercao("X","jasndjan","asdafa","asfadsad");
+
+--Terceira tarefa que o prof deixou
+...
