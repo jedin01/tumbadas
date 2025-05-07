@@ -1,0 +1,39 @@
+form{
+    background-color: #e90000;
+    max-width: 300px;
+    display: block;
+    margin: 0 auto;
+    padding: 10px;
+    border-radius: 10px;
+}
+label{
+    color: #f1f1f1;
+    margin: 10px;
+}
+label.top{
+    text-transform: uppercase;
+    font-weight: bold;
+    display: block;
+    margin: auto;
+    padding: 10px;
+}
+input{
+    margin: auto 10px;
+}
+input.void{
+    color: #f1f1f1;
+    padding: 10px;
+    background-color: #b50000;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none; 
+    display: block;
+    margin: 10px auto;
+    transition: 1s;
+    border: #f1f1f1 2px groove;
+    border-radius: 5px;
+  }
+  input.void:hover{
+    transition: 1s;
+    background-color: #e90000;
+  }
