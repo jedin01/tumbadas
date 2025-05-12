@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Página inicial do Guia de Turismo de Luanda, Angola. Descubra notícias, eventos e destaques culturais.">
+    <title>Home - Guia de Turismo de Luanda</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            background-color: #f8f1e9;
+            line-height: 1.6;
+        }
+
+        /* Header with hero section */
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/guia-da-cidade/assets/imgs/luanda.jpg') no-repeat center/cover;
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        header p {
+            font-size: 1.2em;
+            max-width: 600px;
+        }
+
+        /* Enhanced Navigation */
+        nav {
+            background-color: #c0392b;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        nav .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        nav .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li {
+            position: relative;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1em;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #e74c3c;
+            color: #f1c40f;
+        }
+
+        /* Dropdown for Estória */
+        nav .dropdown {
+            position: relative;
+        }
+
+        nav .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #c0392b;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 5px;
+            top: 100%;
+            left: 0;
+        }
+
+        nav .dropdown-content a {
+            display: block;
+            padding: 12px 16px;
+            color: #fff;
+        }
+
+        nav .dropdown-content a:hover {
+            background-color: #e74c3c;
+        }
+
+        nav .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Hamburger menu for mobile */
+        .hamburger {
+            display: none;
+            font-size: 1.5em;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        /* Main content */
+        main {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        main h2 {
+            color: #c0392b;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        main p {
+            color: #555;
+            font-size: 1.1em;
+            max-width: 800px;
+            margin: 0 auto 20px;
+        }
+
+        main ul {
+            list-style: none;
+            max-width: 600px;
+            margin: 20px auto;
+            text-align: left;
+        }
+
+        main ul li {
+            margin: 10px 0;
+            font-size: 1.1em;
+            color: #333;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        main ul li::before {
+            content: '•';
+            color: #c0392b;
+            font-size: 1.5em;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* Call to action button */
+        .cta-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #f1c40f;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #d4ac0d;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2c2c2c;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        footer p {
+            font-size: 0.9em;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background-color: #c0392b;
+                padding: 20px 0;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+            }
+
+            nav .dropdown-content {
+                position: static;
+                background-color: #a93226;
+            }
+
+            header h1 {
+                font-size: 2em;
+            }
+
+            main {
+                margin: 20px auto;
+            }
+
+            main ul {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Guia de Luanda</div>
+            <div class="hamburger">☰</div>
+            <ul>
+                <li><a href="/home/index.html">Home</a></li>
+                <li><a href="/noticias/index.html">Notícias</a></li>
+                <li><a href="/estoria/index.html">Estória</a></li>
+                <li><a href="/tabela/index.html">Tabela</a></li>
+                <li><a href="/index.html">Sair</a></li>
+            </ul>
+        </div>
+    </nav>
+    <header>
+        <div>
+            <h1>Turismo em Luanda, Angola</h1>
+            <p>Bem-vindo ao coração vibrante da capital angolana!</p>
+        </div>
+    </header>
+
+
+
+    <main>
+        <h2>Bem-vindo ao Guia de Turismo de Luanda</h2>
+        <p>Descubra as maravilhas de Luanda, a vibrante capital de Angola. Explore notícias, eventos e destaques
+            culturais que tornam esta cidade única.</p>
+        <ul>
+            <li><strong>Notícias Locais:</strong> Fique por dentro das últimas atualizações e acontecimentos.</li>
+            <li><strong>Destaques da Semana:</strong> Conheça os lugares e eventos imperdíveis.</li>
+            <li><strong>Eventos Culturais:</strong> Participe de celebrações e experiências autênticas.</li>
+        </ul>
+        <a href="/estoria/index.html" class="cta-button">Explore a Estória de Luanda</a>
+    </main>
+
+    <footer>
+        <p>© 2025 Guia de Turismo de Luanda - Angola. Todos os direitos reservados.</p>
+    </footer>
+
+</body>
+
+</html>
