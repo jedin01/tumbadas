@@ -14,4 +14,6 @@
 footer{
     background: var(--footer-background--);
     padding: 10px;
+    margin-top: 100%;
+    color: var(--text-color--);
 }
