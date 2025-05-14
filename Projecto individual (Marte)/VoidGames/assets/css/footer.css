@@ -1,5 +1,5 @@
 :root{
-    --navbar-background--:#b50000;
+    --footer-background--:#b50000;
     --a-background--:#e90000;
     --body-background--:#090909;
     --text-color--:#f1f1f1;
@@ -11,6 +11,7 @@
     list-style: none;
     box-sizing: border-box;
   }
-h3{
-    color: #f1f1f1;
+footer{
+    background: var(--footer-background--);
+    padding: 10px;
 }

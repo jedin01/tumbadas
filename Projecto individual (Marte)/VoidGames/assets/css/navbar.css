@@ -1,3 +1,9 @@
+:root{
+    --navbar-background--:#b50000;
+    --a-background--:#e90000;
+    --body-background--:#090909;
+    --text-color--:#f1f1f1;
+  }
 * {
     padding: 0;
     margin: 0;
@@ -7,15 +13,15 @@
   }
   body {
     font-family: "Montserrat", sans-serif;
-    background: #090909;
+    background: var(--body-background--);
   }
 nav {
-    background: #b50000;
+    background: var(--navbar-background--);
     height: 80px;
     width: 100%;
   }
   label.logo{
-    color: white;
+    color: var(--text-color--);
     font-size: 25px;
     line-height: 80px;
     padding: 0 50px;
@@ -31,23 +37,23 @@ nav {
     margin: 0 5px;
   }
   nav ul li a {
-    color: white;
+    color: var(--text-color--);
     font-size: 17px;
     text-transform: uppercase;
     transition: 0.5s;
   }
-  ul li a.active,
-  ul li a:hover {
-    background: #e90000;
+  nav ul li a.active,
+  nav ul li a:hover {
+    background: var(--a-background--);
     transition: 0.5s;
     padding: 7px 13px;
     border-radius: 3px;
-    color: #f1f1f1;
+    color: var(--text-color--);
   }
   p{
     font-size: large;
     text-align: center;
-    color: #f1f1f1;
+    color: var(--text-color--);
     font-weight: bold;
     justify-content: center;
     display: block;
