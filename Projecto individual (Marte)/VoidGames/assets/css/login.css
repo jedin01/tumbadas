@@ -33,7 +33,7 @@ label.top{
 input{
     margin: auto 10px;
 }
-input.void{
+button.void{
     color: #f1f1f1;
     padding: 10px;
     background-color: #b50000;
@@ -46,7 +46,7 @@ input.void{
     border: #f1f1f1 2px groove;
     border-radius: 5px;
   }
-  input.void:hover{
+  button.void:hover{
     transition: 1s;
     background-color: #e90000;
   }
