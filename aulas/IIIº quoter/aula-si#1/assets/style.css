@@ -1,0 +1,39 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+table {
+    border-collapse: collapse;
+    border: 1px solid black;
+
+    thead {
+        th {
+            border: 1px solid black;
+        }
+
+    }
+
+    tbody {
+
+
+        tr {
+            border: 1px solid;
+
+            td {
+                border: 1px solid;
+            }
+        }
+    }
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    width: 300px;
+    gap: 8px;
+    .in {
+        display: flex;
+        flex-direction: column;
+    }
+}
