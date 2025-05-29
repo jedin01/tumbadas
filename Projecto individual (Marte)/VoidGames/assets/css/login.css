@@ -1,0 +1,52 @@
+:root{
+    --navbar-background--:#b50000;
+    --a-background--:#e90000;
+    --body-background--:#090909;
+    --text-color--:#f1f1f1;
+  }
+* {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+  }
+form{
+    background-color: #e90000;
+    max-width: 300px;
+    display: block;
+    margin: 0 auto;
+    padding: 10px;
+    border-radius: 10px;
+}
+label{
+    color: #f1f1f1;
+    margin: 10px;
+}
+label.top{
+    text-transform: uppercase;
+    font-weight: bold;
+    display: block;
+    margin: auto;
+    padding: 10px;
+}
+input{
+    margin: auto 10px;
+}
+button.void{
+    color: #f1f1f1;
+    padding: 10px;
+    background-color: #b50000;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none; 
+    display: block;
+    margin: 10px auto;
+    transition: 1s;
+    border: #f1f1f1 2px groove;
+    border-radius: 5px;
+  }
+  button.void:hover{
+    transition: 1s;
+    background-color: #e90000;
+  }
