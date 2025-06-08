@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TelefoneFuncionario;
 use Illuminate\Http\Request;
 
 class TelefoneFuncionarioController extends Controller
@@ -33,7 +34,7 @@ class TelefoneFuncionarioController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(TelefoneFuncionario $telefoneFuncionario)
     {
         //
     }
@@ -41,7 +42,7 @@ class TelefoneFuncionarioController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(TelefoneFuncionario $telefoneFuncionario)
     {
         //
     }
@@ -49,7 +50,7 @@ class TelefoneFuncionarioController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, TelefoneFuncionario $telefoneFuncionario)
     {
         //
     }
@@ -57,7 +58,7 @@ class TelefoneFuncionarioController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(TelefoneFuncionario $telefoneFuncionario)
     {
         //
     }

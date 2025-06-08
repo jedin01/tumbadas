@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Estoque;
 use Illuminate\Http\Request;
 
 class EstoqueController extends Controller
@@ -33,7 +34,7 @@ class EstoqueController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Estoque $estoque)
     {
         //
     }
@@ -41,7 +42,7 @@ class EstoqueController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Estoque $estoque)
     {
         //
     }
@@ -49,7 +50,7 @@ class EstoqueController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Estoque $estoque)
     {
         //
     }
@@ -57,7 +58,7 @@ class EstoqueController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Estoque $estoque)
     {
         //
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TelefoneFornecedor;
 use Illuminate\Http\Request;
 
 class TelefoneFornecedorController extends Controller
@@ -33,7 +34,7 @@ class TelefoneFornecedorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(TelefoneFornecedor $telefoneFornecedor)
     {
         //
     }
@@ -41,7 +42,7 @@ class TelefoneFornecedorController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(TelefoneFornecedor $telefoneFornecedor)
     {
         //
     }
@@ -49,7 +50,7 @@ class TelefoneFornecedorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, TelefoneFornecedor $telefoneFornecedor)
     {
         //
     }
@@ -57,7 +58,7 @@ class TelefoneFornecedorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(TelefoneFornecedor $telefoneFornecedor)
     {
         //
     }
