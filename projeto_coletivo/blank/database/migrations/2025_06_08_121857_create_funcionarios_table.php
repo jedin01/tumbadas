@@ -9,22 +9,14 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-
-        public function up()
-        {
-            Schema::create('funcionarios', function (Blueprint $table) {
-                $table->id();
-                $table->string('pNome');
-                $table->string('uNome');
-                $table->string('email')->unique();
-                $table->string('municipio');
-                $table->string('bairro');
-                $table->timestamps();
-                $table->softDeletes();
-            });
-        }
-
-
+    public function up(): void
+    {
+        Schema::create('funcionarios', function (Blueprint $table) {
+            $table->softDeletes();
+            $table->id();
+            $table->timestamps();
+        });
+    }
 
     /**
      * Reverse the migrations.

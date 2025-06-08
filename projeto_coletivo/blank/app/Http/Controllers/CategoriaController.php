@@ -1,74 +1,65 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Categoria;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
 class CategoriaController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        return Inertia::render('Categoria/Index', ['categorias' => Categoria::all()]);
+        //
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        return Inertia::render('Categoria/Create');
+        //
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'nome' => 'required|string|unique:categorias,nome',
-            'descricao' => 'nullable|string',
-        ]);
-
-        Categoria::create($data);
-        return redirect()->route('categorias.index')->with('success', 'Categoria criada.');
+        //
     }
 
+    /**
+     * Display the specified resource.
+     */
     public function show(Categoria $categoria)
     {
-        return Inertia::render('Categoria/Show', ['categoria' => $categoria]);
+        //
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     */
     public function edit(Categoria $categoria)
     {
-        return Inertia::render('Categoria/Edit', ['categoria' => $categoria]);
+        //
     }
 
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(Request $request, Categoria $categoria)
     {
-        $data = $request->validate([
-            'nome' => 'required|string|unique:categorias,nome,' . $categoria->id,
-            'descricao' => 'nullable|string',
-        ]);
-
-        $categoria->update($data);
-        return redirect()->route('categorias.index')->with('success', 'Categoria atualizada.');
+        //
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy(Categoria $categoria)
     {
-        $categoria->delete();
-        return redirect()->route('categorias.index')->with('success', 'Categoria excluída.');
-    }
-
-    public function trashed()
-    {
-        return Inertia::render('Categoria/Trashed', ['categorias' => Categoria::onlyTrashed()->get()]);
-    }
-
-    public function restore($id)
-    {
-        Categoria::onlyTrashed()->findOrFail($id)->restore();
-        return redirect()->route('categorias.trashed')->with('success', 'Categoria restaurada.');
-    }
-
-    public function forceDelete($id)
-    {
-        Categoria::onlyTrashed()->findOrFail($id)->forceDelete();
-        return redirect()->route('categorias.trashed')->with('success', 'Categoria excluída definitivamente.');
+        //
     }
 }

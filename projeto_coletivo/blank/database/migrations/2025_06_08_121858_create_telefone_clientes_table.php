@@ -9,14 +9,12 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('telefone_clientes', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('idCliente')->constrained('clientes')->onDelete('cascade');
-            $table->string('numeroTelefone');
-            $table->timestamps();
             $table->softDeletes();
+            $table->id();
+            $table->timestamps();
         });
     }
 

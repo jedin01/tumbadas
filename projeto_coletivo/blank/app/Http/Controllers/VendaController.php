@@ -4,85 +4,62 @@ namespace App\Http\Controllers;
 
 use App\Models\Venda;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
 class VendaController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        return Inertia::render('Home');
+        //
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        return Inertia::render('Venda/Create');
+        //
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'cliente_id' => 'required|exists:clientes,id',
-            'data_venda' => 'required|date',
-            'valor_total' => 'required|numeric',
-        ]);
-
-        Venda::create($data);
-
-        return redirect()->route('vendas.index')->with('success', 'Venda criada com sucesso.');
+        //
     }
 
+    /**
+     * Display the specified resource.
+     */
     public function show(Venda $venda)
     {
-        return Inertia::render('Venda/Show', [
-            'venda' => $venda
-        ]);
+        //
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     */
     public function edit(Venda $venda)
     {
-        return Inertia::render('Venda/Edit', [
-            'venda' => $venda
-        ]);
+        //
     }
 
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(Request $request, Venda $venda)
     {
-        $data = $request->validate([
-            'cliente_id' => 'required|exists:clientes,id',
-            'data_venda' => 'required|date',
-            'valor_total' => 'required|numeric',
-        ]);
-
-        $venda->update($data);
-
-        return redirect()->route('vendas.index')->with('success', 'Venda atualizada com sucesso.');
+        //
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy(Venda $venda)
     {
-        $venda->delete();
-
-        return redirect()->route('vendas.index')->with('success', 'Venda excluída com sucesso.');
-    }
-
-    public function trashed()
-    {
-        return Inertia::render('Venda/Trashed', [
-            'vendas' => Venda::onlyTrashed()->get()
-        ]);
-    }
-
-    public function restore($id)
-    {
-        Venda::onlyTrashed()->findOrFail($id)->restore();
-
-        return redirect()->route('vendas.trashed')->with('success', 'Venda restaurada com sucesso.');
-    }
-
-    public function forceDelete($id)
-    {
-        Venda::onlyTrashed()->findOrFail($id)->forceDelete();
-
-        return redirect()->route('vendas.trashed')->with('success', 'Venda excluída permanentemente.');
+        //
     }
 }

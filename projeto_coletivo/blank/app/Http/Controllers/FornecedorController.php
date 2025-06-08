@@ -1,78 +1,65 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Fornecedor;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
 class FornecedorController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        return Inertia::render('Fornecedor/Index', ['fornecedores' => Fornecedor::all()]);
+        //
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        return Inertia::render('Fornecedor/Create');
+        //
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'nome' => 'required|string',
-            'email' => 'required|email|unique:fornecedores,email',
-            'telefone' => 'nullable|string|max:20',
-            'endereco' => 'nullable|string',
-        ]);
-
-        Fornecedor::create($data);
-        return redirect()->route('fornecedores.index')->with('success', 'Fornecedor criado.');
+        //
     }
 
+    /**
+     * Display the specified resource.
+     */
     public function show(Fornecedor $fornecedor)
     {
-        return Inertia::render('Fornecedores/Show', ['fornecedor' => $fornecedor]);
+        //
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     */
     public function edit(Fornecedor $fornecedor)
     {
-        return Inertia::render('Fornecedores/Edit', ['fornecedor' => $fornecedor]);
+        //
     }
 
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(Request $request, Fornecedor $fornecedor)
     {
-        $data = $request->validate([
-            'nome' => 'required|string',
-            'email' => 'required|email|unique:fornecedores,email,' . $fornecedor->id,
-            'telefone' => 'nullable|string|max:20',
-            'endereco' => 'nullable|string',
-        ]);
-
-        $fornecedor->update($data);
-        return redirect()->route('fornecedores.index')->with('success', 'Fornecedor atualizado.');
+        //
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy(Fornecedor $fornecedor)
     {
-        $fornecedor->delete();
-        return redirect()->route('fornecedores.index')->with('success', 'Fornecedor excluído.');
-    }
-
-    public function trashed()
-    {
-        return Inertia::render('Fornecedor/Trashed', ['fornecedores' => Fornecedor::onlyTrashed()->get()]);
-    }
-
-    public function restore($id)
-    {
-        Fornecedor::onlyTrashed()->findOrFail($id)->restore();
-        return redirect()->route('fornecedores.trashed')->with('success', 'Fornecedor restaurado.');
-    }
-
-    public function forceDelete($id)
-    {
-        Fornecedor::onlyTrashed()->findOrFail($id)->forceDelete();
-        return redirect()->route('fornecedores.trashed')->with('success', 'Fornecedor excluído definitivamente.');
+        //
     }
 }

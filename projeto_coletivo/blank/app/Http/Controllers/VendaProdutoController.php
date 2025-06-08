@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Saida;
+use App\Models\VendaProduto;
 use Illuminate\Http\Request;
 
-class SaidaController extends Controller
+class VendaProdutoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class SaidaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Saida $saida)
+    public function show(VendaProduto $vendaProduto)
     {
         //
     }
@@ -42,7 +42,7 @@ class SaidaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Saida $saida)
+    public function edit(VendaProduto $vendaProduto)
     {
         //
     }
@@ -50,7 +50,7 @@ class SaidaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Saida $saida)
+    public function update(Request $request, VendaProduto $vendaProduto)
     {
         //
     }
@@ -58,7 +58,7 @@ class SaidaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Saida $saida)
+    public function destroy(VendaProduto $vendaProduto)
     {
         //
     }

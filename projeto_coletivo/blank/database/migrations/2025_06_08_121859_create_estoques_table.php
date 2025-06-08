@@ -9,15 +9,12 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('estoques', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('idProduto')->constrained('produtos')->onDelete('cascade');
-            $table->integer('quantidade');
-            $table->integer('quantidadeVendida')->default(0);
-            $table->timestamps();
             $table->softDeletes();
+            $table->id();
+            $table->timestamps();
         });
     }
 

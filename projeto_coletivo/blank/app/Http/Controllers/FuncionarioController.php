@@ -1,82 +1,65 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Funcionario;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
 class FuncionarioController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        return Inertia::render('Funcionario/Index', ['funcionarios' => Funcionario::all()]);
+        //
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        return Inertia::render('Funcionario/Create');
+        //
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'pNome' => 'required|string',
-            'uNome' => 'required|string',
-            'email' => 'required|email|unique:funcionarios,email',
-            'municipio' => 'required|string',
-            'bairro' => 'required|string',
-        ]);
-
-        Funcionario::create($data);
-        return redirect()->route('funcionarios.index')->with('success', 'Funcionário criado.');
+        //
     }
 
+    /**
+     * Display the specified resource.
+     */
     public function show(Funcionario $funcionario)
     {
-        return Inertia::render('Funcionario/Show', ['funcionario' => $funcionario]);
+        //
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     */
     public function edit(Funcionario $funcionario)
     {
-        return Inertia::render('Funcionario/Edit', ['funcionario' => $funcionario]);
+        //
     }
 
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(Request $request, Funcionario $funcionario)
     {
-        $data = $request->validate([
-            'pNome' => 'required|string',
-            'uNome' => 'required|string',
-            'email' => 'required|email|unique:funcionarios,email,' . $funcionario->id,
-            'municipio' => 'required|string',
-            'bairro' => 'required|string',
-        ]);
-
-        $funcionario->update($data);
-        return redirect()->route('funcionarios.index')->with('success', 'Funcionário atualizado.');
+        //
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy(Funcionario $funcionario)
     {
-        $funcionario->delete();
-        return redirect()->route('funcionarios.index')->with('success', 'Funcionário excluído.');
-    }
-
-    public function trashed()
-    {
-        return Inertia::render('Funcionario/Trashed', [
-            'funcionarios' => Funcionario::onlyTrashed()->get(),
-        ]);
-    }
-
-    public function restore($id)
-    {
-        Funcionario::onlyTrashed()->findOrFail($id)->restore();
-        return redirect()->route('funcionarios.trashed')->with('success', 'Funcionário restaurado.');
-    }
-
-    public function forceDelete($id)
-    {
-        Funcionario::onlyTrashed()->findOrFail($id)->forceDelete();
-        return redirect()->route('funcionarios.trashed')->with('success', 'Funcionário excluído definitivamente.');
+        //
     }
 }

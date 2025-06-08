@@ -9,18 +9,14 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-        public function up()
-        {
-            Schema::create('telefone_fornecedores', function (Blueprint $table) {
-                $table->id();
-                $table->foreignId('idFornecedor')->constrained('fornecedores')->onDelete('cascade');
-                $table->string('numeroTelefone');
-                $table->timestamps();
-                $table->softDeletes();
-            });
-        }
-
-
+    public function up(): void
+    {
+        Schema::create('telefone_fornecedors', function (Blueprint $table) {
+            $table->softDeletes();
+            $table->id();
+            $table->timestamps();
+        });
+    }
 
     /**
      * Reverse the migrations.
