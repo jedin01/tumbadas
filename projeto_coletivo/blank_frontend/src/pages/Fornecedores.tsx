@@ -12,8 +12,11 @@ const Fornecedores = () => {
   });
 
   const columns: GridColDef[] = [
-    // Defina as colunas aqui, exemplo:
-    { field: "id", headerName: "ID", width: 70 }
+    { field: "id", headerName: "ID", width: 70 },
+    { field: "pNome", headerName: "Primeiro Nome", flex: 1, minWidth: 150 },
+    { field: "uNome", headerName: "Último Nome", flex: 1, minWidth: 150 },
+    { field: "municipio", headerName: "Município", flex: 1, minWidth: 150 },
+    { field: "bairro", headerName: "Bairro", flex: 1, minWidth: 150 },
   ];
 
   React.useEffect(() => {

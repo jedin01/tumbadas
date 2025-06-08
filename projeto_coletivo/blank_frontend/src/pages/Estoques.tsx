@@ -12,8 +12,27 @@ const Estoques = () => {
   });
 
   const columns: GridColDef[] = [
-    // Defina as colunas aqui, exemplo:
-    { field: "id", headerName: "ID", width: 70 }
+    { field: "id", headerName: "ID", width: 70 },
+    {
+      field: "produto",
+      headerName: "Produto",
+      flex: 1,
+      minWidth: 200,
+      valueGetter: (params) =>
+        params.row.produto?.nome || "Produto não disponível",
+    },
+    {
+      field: "quantidade",
+      headerName: "Quantidade em Estoque",
+      flex: 1,
+      minWidth: 150,
+    },
+    {
+      field: "quantidadeVendida",
+      headerName: "Quantidade Vendida",
+      flex: 1,
+      minWidth: 150,
+    },
   ];
 
   React.useEffect(() => {

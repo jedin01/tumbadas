@@ -12,8 +12,9 @@ const Categorias = () => {
   });
 
   const columns: GridColDef[] = [
-    // Defina as colunas aqui, exemplo:
-    { field: "id", headerName: "ID", width: 70 }
+    { field: "id", headerName: "ID", width: 70 },
+    { field: "nome", headerName: "Nome", width: 200 },
+    { field: "descricao", headerName: "Descrição", width: 300 },
   ];
 
   React.useEffect(() => {

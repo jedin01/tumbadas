@@ -179,7 +179,7 @@ export const fetchSingleUser = async (id: string) => {
 // GET ALL PRODUCTS
 export const fetchProducts = async () => {
   const response = await axios
-    .get("https://react-admin-ui-v1-api.vercel.app/products")
+    .get("http://127.0.0.1:8000/api/produtos")
     .then((res) => {
       console.log("axios get:", res.data);
       return res.data;
@@ -367,21 +367,6 @@ export const fetchCategorias = async () => {
     .get("http://127.0.0.1:8000/api/categorias")
     .then((res) => {
       console.log("axios get categorias:", res.data);
-      return res.data;
-    })
-    .catch((err) => {
-      console.log(err);
-      throw err;
-    });
-  return response;
-};
-
-// GET PRODUTOS
-export const fetchProdutos = async () => {
-  const response = await axios
-    .get("https://react-admin-ui-v1-api.vercel.app/produtos")
-    .then((res) => {
-      console.log("axios get produtos:", res.data);
       return res.data;
     })
     .catch((err) => {

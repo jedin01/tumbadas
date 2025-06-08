@@ -12,8 +12,27 @@ const Saidas = () => {
   });
 
   const columns: GridColDef[] = [
-    // Defina as colunas aqui, exemplo:
-    { field: "id", headerName: "ID", width: 70 }
+    { field: "id", headerName: "ID", width: 70 },
+    {
+      field: "produto",
+      headerName: "Produto",
+      flex: 1,
+      minWidth: 200,
+      valueGetter: (params) =>
+        params.row.produto?.nome || "Produto não disponível",
+    },
+    {
+      field: "quantidade",
+      headerName: "Quantidade",
+      flex: 1,
+      minWidth: 150,
+    },
+    {
+      field: "data",
+      headerName: "Data da Saída",
+      flex: 1,
+      minWidth: 150,
+    },
   ];
 
   React.useEffect(() => {
@@ -28,7 +47,7 @@ const Saidas = () => {
         <div className="w-full flex justify-between mb-5">
           <div className="flex gap-1 justify-start flex-col items-start">
             <h2 className="font-bold text-2xl xl:text-4xl text-base-content dark:text-neutral-200">
-              Saidas
+              Saídas
             </h2>
             {data && data.length > 0 && (
               <span className="text-neutral-content font-medium">

@@ -12,8 +12,11 @@ const Clientes = () => {
   });
 
   const columns: GridColDef[] = [
-    // Defina as colunas aqui, exemplo:
-    { field: "id", headerName: "ID", width: 70 }
+    { field: "id", headerName: "ID", width: 70 },
+    { field: "pNome", headerName: "Primeiro Nome", width: 150 },
+    { field: "uNome", headerName: "Último Nome", width: 150 },
+    { field: "municipio", headerName: "Município", width: 150 },
+    { field: "bairro", headerName: "Bairro", width: 150 },
   ];
 
   React.useEffect(() => {
