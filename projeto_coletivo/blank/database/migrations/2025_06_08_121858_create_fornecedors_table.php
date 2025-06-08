@@ -9,12 +9,16 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('fornecedors', function (Blueprint $table) {
-            $table->softDeletes();
+        Schema::create('fornecedores', function (Blueprint $table) {
             $table->id();
+            $table->string('pNome');
+            $table->string('uNome');
+            $table->string('municipio');
+            $table->string('bairro');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

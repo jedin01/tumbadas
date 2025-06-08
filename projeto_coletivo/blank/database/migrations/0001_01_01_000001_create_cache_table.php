@@ -12,7 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cache', function (Blueprint $table) {
-            $table->softDeletes();
         $table->softDeletes();
             $table->string('key')->primary();
             $table->mediumText('value');
@@ -20,7 +19,6 @@ return new class extends Migration
         });
 
         Schema::create('cache_locks', function (Blueprint $table) {
-            $table->softDeletes();
         $table->softDeletes();
             $table->string('key')->primary();
             $table->string('owner');

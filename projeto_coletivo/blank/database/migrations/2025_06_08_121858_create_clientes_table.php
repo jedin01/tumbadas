@@ -9,12 +9,16 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('clientes', function (Blueprint $table) {
-            $table->softDeletes();
             $table->id();
+            $table->string('pNome');
+            $table->string('uNome');
+            $table->string('municipio');
+            $table->string('bairro');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

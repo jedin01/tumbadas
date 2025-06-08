@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Fornecedor extends Model
-    protected $fillable = ['pNome','uNome','municipio','bairro'];
 {
+    protected $fillable = ['pNome','uNome','municipio','bairro'];
+
     //
-}
+
 
     public function entradas() { return $this->hasMany(Entrada::class, 'idFornecedor'); }
+}

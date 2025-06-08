@@ -9,14 +9,21 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('vendas', function (Blueprint $table) {
-            $table->softDeletes();
-            $table->id();
-            $table->timestamps();
-        });
-    }
+     public function up()
+     {
+         Schema::create('vendas', function (Blueprint $table) {
+             $table->id();
+             $table->foreignId('idFuncionario')->constrained('funcionarios')->onDelete('cascade');
+             $table->foreignId('idCliente')->constrained('clientes')->onDelete('cascade');
+             $table->decimal('investimento', 10, 2)->default(0);
+             $table->decimal('valorTotal', 10, 2);
+             $table->decimal('troco', 10, 2)->default(0);
+             $table->date('data');
+             $table->timestamps();
+             $table->softDeletes();
+         });
+     }
+
 
     /**
      * Reverse the migrations.

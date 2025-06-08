@@ -9,14 +9,19 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('venda_produtos', function (Blueprint $table) {
-            $table->softDeletes();
-            $table->id();
-            $table->timestamps();
-        });
-    }
+     public function up()
+     {
+         Schema::create('venda_produtos', function (Blueprint $table) {
+             $table->id();
+             $table->foreignId('idVenda')->constrained('vendas')->onDelete('cascade');
+             $table->foreignId('idProduto')->constrained('produtos')->onDelete('cascade');
+             $table->integer('quantidade');
+             $table->decimal('precoUnitario', 10, 2);
+             $table->timestamps();
+             $table->softDeletes();
+         });
+     }
+
 
     /**
      * Reverse the migrations.
