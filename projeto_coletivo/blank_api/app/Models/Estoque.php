@@ -5,9 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class Estoque extends Model
-    protected $fillable = ['idProduto','quantidade','quantidadeVendida'];
 {
-    //
-}
+    protected $fillable = ["idProduto", "quantidade", "quantidadeVendida"];
 
-    public function produto() { return $this->belongsTo(Produto::class, 'idProduto'); }
+    //
+
+    public function produto()
+    {
+        return $this->belongsTo(Produto::class, "idProduto");
+    }
+}
