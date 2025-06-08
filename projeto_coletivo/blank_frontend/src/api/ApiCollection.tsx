@@ -304,7 +304,7 @@ export const fetchTelefoneFuncionarios = async () => {
 // GET CLIENTES
 export const fetchClientes = async () => {
   const response = await axios
-    .get("https://react-admin-ui-v1-api.vercel.app/clientes")
+    .get("http://127.0.0.1:8000/api/clientes")
     .then((res) => {
       console.log("axios get clientes:", res.data);
       return res.data;
@@ -334,7 +334,7 @@ export const fetchTelefoneClientes = async () => {
 // GET FORNECEDORES
 export const fetchFornecedores = async () => {
   const response = await axios
-    .get("https://react-admin-ui-v1-api.vercel.app/fornecedores")
+    .get("http://127.0.0.1:8000/api/fornecedores")
     .then((res) => {
       console.log("axios get fornecedores:", res.data);
       return res.data;
@@ -364,7 +364,7 @@ export const fetchTelefoneFornecedores = async () => {
 // GET CATEGORIAS
 export const fetchCategorias = async () => {
   const response = await axios
-    .get("https://react-admin-ui-v1-api.vercel.app/categorias")
+    .get("http://127.0.0.1:8000/api/categorias")
     .then((res) => {
       console.log("axios get categorias:", res.data);
       return res.data;
@@ -394,7 +394,7 @@ export const fetchProdutos = async () => {
 // GET ESTOQUES
 export const fetchEstoques = async () => {
   const response = await axios
-    .get("https://react-admin-ui-v1-api.vercel.app/estoques")
+    .get("http://127.0.0.1:8000/api/estoques")
     .then((res) => {
       console.log("axios get estoques:", res.data);
       return res.data;
@@ -409,7 +409,7 @@ export const fetchEstoques = async () => {
 // GET ENTRADAS
 export const fetchEntradas = async () => {
   const response = await axios
-    .get("https://react-admin-ui-v1-api.vercel.app/entradas")
+    .get("http://127.0.0.1:8000/api/entradas")
     .then((res) => {
       console.log("axios get entradas:", res.data);
       return res.data;
@@ -424,7 +424,7 @@ export const fetchEntradas = async () => {
 // GET SAIDAS
 export const fetchSaidas = async () => {
   const response = await axios
-    .get("https://react-admin-ui-v1-api.vercel.app/saidas")
+    .get("http://127.0.0.1:8000/api/saidas")
     .then((res) => {
       console.log("axios get saidas:", res.data);
       return res.data;
@@ -439,7 +439,7 @@ export const fetchSaidas = async () => {
 // GET VENDAS
 export const fetchVendas = async () => {
   const response = await axios
-    .get("https://react-admin-ui-v1-api.vercel.app/vendas")
+    .get("http://127.0.0.1:8000/api/vendas")
     .then((res) => {
       console.log("axios get vendas:", res.data);
       return res.data;
@@ -454,7 +454,7 @@ export const fetchVendas = async () => {
 // GET VENDA PRODUTO
 export const fetchVendaProduto = async () => {
   const response = await axios
-    .get("https://react-admin-ui-v1-api.vercel.app/vendaproduto")
+    .get("http://127.0.0.1:8000/api/vendaproduto")
     .then((res) => {
       console.log("axios get vendaProduto:", res.data);
       return res.data;
