@@ -1,4 +1,6 @@
 // src/components/MedicalLandingPage.tsx
+import { Link } from "react-router-dom";
+
 
 export default function MedicalLandingPage() {
   return (
@@ -12,8 +14,17 @@ export default function MedicalLandingPage() {
           <a href="#" className="hover:underline">Home</a>
           <a href="#" className="hover:underline">About us</a>
           <a href="#" className="hover:underline">Contact</a>
-          <button className="border border-green-700 rounded-full px-4 py-1 hover:bg-green-600 hover:text-white transition">Login</button>
-          <button className="border border-green-700 rounded-full px-4 py-1 hover:bg-green-600 hover:text-white transition">Sign up</button>
+          <Link
+            to="/login"
+            className="border border-green-700 rounded-full px-4 py-1 hover:bg-green-600 hover:text-white transition"
+          >
+            Login
+          </Link>
+          <Link to="/signup" className="border border-green-700 rounded-full px-4 py-1 hover:bg-green-600 hover:text-white transition"
+          >
+            Sign Up
+          </Link>
+
         </nav>
       </header>
 
