@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    font-family: "Plus Jakarta Sans", sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+}
+
+:fullscreen::backdrop {
+    background: none !important;
+    overflow: visible;
+}
+
+:fullscreen::before & :fullscreen::after {
+    overflow: visible;
+    overflow: visible;
+}
+
+:fullscreen #rootContainer {
+    overflow: auto !important;
+}
+
+:fullscreen body {
+    overflow: auto !important;
+}
+
+:fullscreen {
+    height: auto !important;
+    overflow: auto !important;
+}
+
+/* Home */
+.home .box {
+    @apply rounded-lg xl:rounded-2xl overflow-visible border-2 border-base-300 dark:border-slate-700 p-4 xl:p-4 2xl:p-6
+}
+
+.dataGrid span, .dataGrid svg, .dataGrid button {
+    @apply text-base-content
+}
+
+.dataGrid .MuiDataGrid-columnHeaders {
+    @apply text-base-content border-base-content
+}
+
+.dataGrid .MuiDataGrid-virtualScroller {
+    @apply text-base-content border-base-content
+}
+
+.dataGrid .MuiDataGrid-row .MuiDataGrid-cell .MuiSvgIcon-root {
+    @apply text-base-content
+}
+
+.dataGrid .MuiDataGrid-footerContainer {
+    @apply text-base-content border-base-content
+}
+
+.dataGrid .MuiDataGrid-footerContainer p {
+    @apply text-base-content border-base-content
+}
+
+.dataGrid .MuiDataGrid-toolbarContainer {
+    @apply flex-row-reverse
+}
+
+.dataGrid .MuiDataGrid-toolbarContainer input {
+    @apply border-base-content text-base-content
+}
+
+.dataGrid .MuiDataGrid-toolbarContainer ::placeholder {
+    @apply text-base-content
+}
+
+.modal-action> :not([hidden])~ :not([hidden]) {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+}
+
+.skeleton {
+    @apply dark:bg-neutral
+}
+
+.fc .fc-header-toolbar .fc-toolbar-chunk {
+    @apply text-[10px] xl:text-base
+}
+
+.fc .fc-header-toolbar .fc-toolbar-chunk .fc-button {
+    @apply btn dark:btn-neutral
+}
+
+.fc .fc-header-toolbar .fc-toolbar-chunk .fc-button-group {
+    @apply gap-2
+}
+
+.fc .fc-header-toolbar .fc-toolbar-chunk .fc-button.fc-button-primary {
+    @apply border-none text-base-content
+}
+
+.fc .fc-header-toolbar .fc-toolbar-chunk .fc-button.fc-button-primary:disabled {
+    @apply btn-disabled opacity-50
+}
+
+#singleUser #activities ul li {
+    @apply list-none relative w-[1px] pt-[50px] bg-primary
+}
+
+#singleUser #activities ul li::after {
+    content: "";
+    @apply absolute left-[50%] bottom-0 w-[10px] h-[10px] rounded-full bg-primary -translate-x-[50%]
+}
+
+#singleProduct #activities ul li {
+    @apply list-none relative w-[1px] pt-[50px] bg-primary
+}
+
+#singleProduct #activities ul li::after {
+    content: "";
+    @apply absolute left-[50%] bottom-0 w-[10px] h-[10px] rounded-full bg-primary -translate-x-[50%]
+}
