@@ -1,298 +1,259 @@
-import React, { ChangeEvent, FormEvent } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { HiOutlineXMark } from "react-icons/hi2";
+import { HiOutlinePencil } from "react-icons/hi2";
 
-interface AddDataProps {
-  slug: string;
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+interface Product {
+  id: string | number;
+  nome: string;
+  descricao: string;
+  preco: number;
+  categoria: string;
+  imageUrl?: string;
 }
 
-const AddData: React.FC<AddDataProps> = ({
-  slug,
-  isOpen,
-  //   columns,
-  setIsOpen,
-}) => {
-  // global
-  const [showModal, setShowModal] = React.useState(false);
-  const [file, setFile] = React.useState<File | null>(null);
-  const [preview, setPreview] = React.useState<string | null>(null);
+const EditProduct = () => {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
 
-  // add user
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [phone, setPhone] = React.useState("");
-  const [isVerified, setIsVerified] = React.useState("");
-  const [formUserIsEmpty, setFormUserIsEmpty] = React.useState(true);
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
 
-  // add product
-  //
-  //
-  const [nome, setNome] = React.useState("");
-  const [descricao, setDescricao] = React.useState("");
-  const [idCategoria, setIdCategoria] = React.useState("");
-  const [preco, setPreco] = React.useState("");
-  const [formProductIsEmpty, setFormProductIsEmpty] = React.useState(true);
+  const [product, setProduct] = useState<Product>({
+    id: "",
+    nome: "",
+    descricao: "",
+    preco: 0,
+    categoria: "",
+    imageUrl: "",
+  });
 
-  // global
-  const loadImage = (e: ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    if (!id) {
+      console.warn("ID não definido na URL.");
+      return;
+    }
+
+    const fetchProduct = async () => {
+      try {
+        console.log("Buscando produto com ID:", id);
+        const response = await fetch(
+          `http://localhost:8000/api/produtos/${id}`,
+        );
+
+        if (!response.ok) {
+          console.error("Erro ao buscar produto:", response.status);
+          throw new Error("Erro ao buscar produto");
+        }
+
+        const data: Product = await response.json();
+        console.log("Produto carregado:", data);
+
+        setProduct({
+          id: data.id,
+          nome: data.nome,
+          descricao: data.descricao,
+          preco: Number(data.preco),
+          categoria: data.categoria?.nome || "", // acessa o nome corretamente
+          imageUrl: data.imageUrl || "",
+        });
+
+        setPreview(data.imageUrl || null);
+      } catch (error) {
+        toast.error("Erro ao carregar dados do produto.");
+        console.error("Erro no fetchProduct:", error);
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
+
+  const handleFileSelect = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const imageUpload = e.target.files[0];
-      setFile(imageUpload);
+      setSelectedFile(imageUpload);
       setPreview(URL.createObjectURL(imageUpload));
     }
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (slug === "product") {
-      const newProduct = {
-        nome,
-        descricao,
-        idCategoria,
-        preco: parseFloat(preco),
-      };
+  const handleIconClick = () => {
+    fileInputRef.current?.click();
+  };
 
-      try {
-        const response = await fetch("http://localhost:8000/api/produtos", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newProduct),
-        });
-
-        if (!response.ok) {
-          throw new Error("Erro ao adicionar produto.");
-        }
-
-        toast.success("Produto adicionado com sucesso!");
-        setIsOpen(false);
-      } catch (error) {
-        toast.error("Erro ao submeter dados.");
-        console.error(error);
+  const handleSubmit = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("_method", "PUT"); // necessário para Laravel entender como PUT
+      formData.append("nome", product.nome);
+      formData.append("descricao", product.descricao);
+      formData.append("preco", String(product.preco));
+      formData.append("categoria", product.categoria);
+      if (selectedFile) {
+        formData.append("image", selectedFile);
       }
+
+      const response = await fetch(`http://localhost:8000/api/produtos/${id}`, {
+        method: "POST", // continua sendo POST, com _method: PUT
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Erro ao salvar o produto");
+      }
+
+      toast.success("Produto salvo com sucesso!");
+      navigate("/products");
+    } catch (error) {
+      toast.error("Erro ao salvar o produto");
+      console.error(error);
     }
   };
 
-  React.useEffect(() => {
-    setShowModal(isOpen);
-  }, [isOpen]);
-
-  // add user
-  React.useEffect(() => {
-    if (
-      firstName === "" ||
-      lastName === "" ||
-      email === "" ||
-      phone === "" ||
-      isVerified === "" ||
-      file === null
-    ) {
-      setFormUserIsEmpty(true);
-    }
-    if (
-      firstName !== "" &&
-      lastName !== "" &&
-      email !== "" &&
-      phone !== "" &&
-      isVerified !== "" &&
-      file !== null
-    ) {
-      setFormUserIsEmpty(false);
-    }
-  }, [email, file, firstName, isVerified, lastName, phone]);
-
-  React.useEffect(() => {
-    if (nome === "" || descricao === "" || idCategoria === "" || preco === "") {
-      setFormProductIsEmpty(true);
-    }
-
-    if (nome !== "" && descricao !== "" && idCategoria !== "" && preco !== "") {
-      setFormProductIsEmpty(false);
-    }
-  }, [nome, descricao, idCategoria, preco]);
-
-  if (slug === "user") {
-    return (
-      <div className="w-screen h-screen fixed top-0 left-0 flex justify-center items-center bg-black/75 z-[99]">
-        <div
-          className={`w-[80%] xl:w-[50%] rounded-lg p-7 bg-base-100 relative transition duration-300 flex flex-col items-stretch gap-5 ${
-            showModal ? "translate-y-0" : "translate-y-full"
-          }
-            ${showModal ? "opacity-100" : "opacity-0"}`}
-        >
-          <div className="w-full flex justify-between pb-5 border-b border-base-content border-opacity-30">
+  return (
+    <div className="w-full p-0 m-0">
+      <div className="w-full flex flex-col items-stretch gap-7 xl:gap-8">
+        <div className="flex flex-col xl:flex-row items-start justify-between gap-3 xl:gap-0">
+          <h2 className="font-bold text-2xl xl:text-4xl text-base-content dark:text-neutral-200">
+            Edit Product
+          </h2>
+          <div className="w-full xl:w-auto grid grid-cols-2 xl:flex gap-3">
             <button
-              onClick={() => {
-                setShowModal(false);
-                setIsOpen(false);
-              }}
-              className="absolute top-5 right-3 btn btn-ghost btn-circle"
+              onClick={() => navigate("/products")}
+              className="btn btn-block xl:w-auto dark:btn-neutral"
             >
-              <HiOutlineXMark className="text-xl font-bold" />
+              Discard Changes
             </button>
-            <span className="text-2xl font-bold">Add new {slug}</span>
+            <button
+              onClick={handleSubmit}
+              className="btn btn-block xl:w-auto btn-primary"
+            >
+              Save Changes
+            </button>
           </div>
-          <form
-            onSubmit={handleSubmit}
-            className="w-full grid grid-cols-1 lg:grid-cols-2 gap-4"
-          >
-            <input
-              type="text"
-              placeholder="First Name"
-              className="input input-bordered w-full"
-              name="firstName"
-              id="firstName"
-              onChange={(element) => setFirstName(element.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="Last Name"
-              className="input input-bordered w-full"
-              name="lastName"
-              id="lastName"
-              onChange={(element) => setLastName(element.target.value)}
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              className="input input-bordered w-full"
-              name="email"
-              id="email"
-              onChange={(element) => setEmail(element.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="Phone"
-              className="input input-bordered w-full"
-              name="phone"
-              id="phone"
-              onChange={(element) => setPhone(element.target.value)}
-            />
-            <label className="form-control w-full">
-              <div className="label">
-                <span className="label-text">Verified Status</span>
+        </div>
+
+        <div className="flex items-center gap-3 xl:gap-8">
+          <div className="relative inline-flex">
+            <button
+              onClick={handleIconClick}
+              className="btn btn-circle btn-sm xl:btn-md top-0 right-0 absolute z-[1]"
+            >
+              <HiOutlinePencil className="text-xs xl:text-lg" />
+            </button>
+            <div className="avatar">
+              <div className="w-24 xl:w-36 2xl:w-48 rounded-lg">
+                <img
+                  src={
+                    preview || "https://via.placeholder.com/150?text=No+Image"
+                  }
+                  alt="product"
+                  className="object-cover w-full h-full"
+                />
               </div>
-              <select
-                className="select select-bordered"
-                name="isVerified"
-                id="isVerified"
-                onChange={(element) => setIsVerified(element.target.value)}
-              >
-                <option disabled selected>
-                  Select one
-                </option>
-                <option value="true">Yes</option>
-                <option value="false">No</option>
-              </select>
-            </label>
-            <label className="form-control w-full">
-              <div className="label">
-                <span className="label-text">Pick a profile photo</span>
+            </div>
+          </div>
+
+          <input
+            type="file"
+            ref={fileInputRef}
+            className="hidden"
+            onChange={handleFileSelect}
+            accept="image/*"
+          />
+
+          <div className="flex flex-col items-start gap-1">
+            <h3 className="font-semibold text-xl xl:text-3xl">
+              {product.nome}
+            </h3>
+            <span className="font-normal text-base">{product.categoria}</span>
+          </div>
+        </div>
+
+        <div className="w-full flex flex-col items-stretch gap-3 xl:gap-7">
+          <div className="flex items-center w-full gap-3 xl:gap-5">
+            <h4 className="font-semibold text-lg xl:text-2xl whitespace-nowrap">
+              Product Details
+            </h4>
+            <div className="w-full h-[2px] bg-base-300 dark:bg-slate-700 mt-1"></div>
+          </div>
+
+          <div className="w-full grid xl:grid-cols-3 gap-3 xl:gap-5 2xl:gap-20 xl:text-base">
+            <div className="w-full flex flex-col sm:grid sm:grid-cols-3 xl:flex xl:flex-col gap-3 xl:gap-5">
+              {/* Name */}
+              <div className="w-full grid xl:grid-cols-3 2xl:grid-cols-4 items-center gap-1 xl:gap-0">
+                <label className="whitespace-nowrap">Name*</label>
+                <input
+                  type="text"
+                  placeholder="Type here"
+                  value={product.nome}
+                  onChange={(e) =>
+                    setProduct((prev) => ({
+                      ...prev,
+                      nome: e.target.value,
+                    }))
+                  }
+                  className="input input-bordered w-full col-span-2 2xl:col-span-3"
+                />
               </div>
-              <input
-                type="file"
-                className="file-input file-input-bordered w-full"
-                onChange={loadImage}
+
+              {/* Category */}
+              <div className="w-full grid xl:grid-cols-3 2xl:grid-cols-4 items-center gap-1 xl:gap-0">
+                <label className="whitespace-nowrap">Category*</label>
+                <input
+                  type="text"
+                  placeholder="Type here"
+                  value={product.categoria}
+                  onChange={(e) =>
+                    setProduct((prev) => ({
+                      ...prev,
+                      categoria: e.target.value,
+                    }))
+                  }
+                  className="input input-bordered w-full col-span-2 2xl:col-span-3"
+                />
+              </div>
+
+              {/* Price */}
+              <div className="w-full grid xl:grid-cols-3 2xl:grid-cols-4 items-center gap-1 xl:gap-0">
+                <label className="whitespace-nowrap">Price*</label>
+                <input
+                  type="number"
+                  placeholder="Type here"
+                  value={product.preco}
+                  onChange={(e) =>
+                    setProduct((prev) => ({
+                      ...prev,
+                      preco: Number(e.target.value),
+                    }))
+                  }
+                  className="input input-bordered w-full col-span-2 2xl:col-span-3"
+                  min={0}
+                  step={0.01}
+                />
+              </div>
+            </div>
+
+            {/* Description */}
+            <div className="w-full flex flex-col sm:grid sm:grid-cols-3 xl:flex xl:flex-col gap-3 xl:gap-5 col-span-2">
+              <label>Description</label>
+              <textarea
+                className="textarea textarea-bordered w-full col-span-3"
+                placeholder="Product description"
+                value={product.descricao}
+                onChange={(e) =>
+                  setProduct((prev) => ({
+                    ...prev,
+                    descricao: e.target.value,
+                  }))
+                }
               />
-            </label>
-            {preview && preview !== "" && (
-              <div className="w-full flex flex-col items-start gap-3">
-                <span>Profile Preview</span>
-                <div className="avatar">
-                  <div className="w-24 rounded-full">
-                    <img src={preview} alt="profile-upload" />
-                  </div>
-                </div>
-              </div>
-            )}
-            <button
-              className={`mt-5 btn ${
-                formUserIsEmpty ? "btn-disabled" : "btn-primary"
-              } btn-block col-span-full font-semibold`}
-            >
-              Submit
-            </button>
-          </form>
-        </div>
-      </div>
-    );
-  }
-
-  if (slug === "product") {
-    return (
-      <div className="w-screen h-screen fixed top-0 left-0 flex justify-center items-center bg-black/75 z-[99]">
-        <div
-          className={`w-[80%] xl:w-[50%] rounded-lg p-7 bg-base-100 relative transition duration-300 flex flex-col items-stretch gap-5 ${
-            showModal ? "translate-y-0" : "translate-y-full"
-          }
-            ${showModal ? "opacity-100" : "opacity-0"}`}
-        >
-          <div className="w-full flex justify-between pb-5 border-b border-base-content border-opacity-30">
-            <button
-              onClick={() => {
-                setShowModal(false);
-                setIsOpen(false);
-              }}
-              className="absolute top-5 right-3 btn btn-ghost btn-circle"
-            >
-              <HiOutlineXMark className="text-xl font-bold" />
-            </button>
-            <span className="text-2xl font-bold">Add new {slug}</span>
+            </div>
           </div>
-          <form
-            onSubmit={handleSubmit}
-            className="w-full grid grid-cols-1 lg:grid-cols-2 gap-4"
-          >
-            <input
-              type="text"
-              placeholder="Nome do Produto"
-              className="input input-bordered w-full"
-              name="nome"
-              id="nome"
-              onChange={(e) => setNome(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="Descrição"
-              className="input input-bordered w-full"
-              name="descricao"
-              id="descricao"
-              onChange={(e) => setDescricao(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="ID da Categoria"
-              className="input input-bordered w-full"
-              name="idCategoria"
-              id="idCategoria"
-              onChange={(e) => setIdCategoria(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="Preço"
-              className="input input-bordered w-full"
-              name="preco"
-              id="preco"
-              onChange={(e) => setPreco(e.target.value)}
-            />
-            <button
-              className={`mt-5 btn ${
-                formProductIsEmpty ? "btn-disabled" : "btn-primary"
-              } btn-block col-span-full font-semibold`}
-            >
-              Submit
-            </button>
-          </form>
         </div>
       </div>
-    );
-  }
-
-  return null;
+    </div>
+  );
 };
 
-export default AddData;
+export default EditProduct;

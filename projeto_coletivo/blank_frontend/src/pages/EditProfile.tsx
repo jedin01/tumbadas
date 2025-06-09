@@ -1,16 +1,16 @@
-import React, { ChangeEvent } from 'react';
-import toast from 'react-hot-toast';
-import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi2';
-import { useNavigate } from 'react-router-dom';
+import React, { ChangeEvent } from "react";
+
+import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
+import { HiOutlinePencil, HiOutlineTrash } from "react-icons/hi2";
+import { useNavigate } from "react-router-dom";
 
 const EditProfile = () => {
   const modalDelete = React.useRef<HTMLDialogElement>(null);
   const navigate = useNavigate();
 
   const fileInputRef = React.useRef<HTMLInputElement>(null);
-  const [selectedFile, setSelectedFile] = React.useState<File | null>(
-    null
-  );
+  const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
   const [preview, setPreview] = React.useState<string | null>(null);
 
   const handleFileSelect = (e: ChangeEvent<HTMLInputElement>) => {
@@ -18,20 +18,20 @@ const EditProfile = () => {
       const imageUpload = e.target.files[0];
       setSelectedFile(imageUpload);
       setPreview(URL.createObjectURL(imageUpload));
-      console.log('Selected File: ', selectedFile);
+      console.log("Selected File: ", selectedFile);
     }
   };
   const handleIconClick = () => {
     fileInputRef.current?.click();
   };
 
-  const [firstName, setFirstName] = React.useState('Frans');
-  const [lastName, setLastName] = React.useState('AHW');
-  const [nickName, setNickName] = React.useState('Frans');
-  const [email, setEmail] = React.useState('franswinata6@gmail.com');
-  const [phone, setPhone] = React.useState('081-234-5678');
+  const [firstName, setFirstName] = React.useState("Frans");
+  const [lastName, setLastName] = React.useState("AHW");
+  const [nickName, setNickName] = React.useState("Frans");
+  const [email, setEmail] = React.useState("franswinata6@gmail.com");
+  const [phone, setPhone] = React.useState("081-234-5678");
   const [address, setAddress] = React.useState(
-    'Suite 948 Jl. Gajahmada No. 91, Malang, SM 74810'
+    "Suite 948 Jl. Gajahmada No. 91, Malang, SM 74810",
   );
 
   return (
@@ -46,15 +46,15 @@ const EditProfile = () => {
           </h2>
           <div className="w-full xl:w-auto grid grid-cols-2 xl:flex gap-3">
             <button
-              onClick={() => navigate('/profile')}
+              onClick={() => navigate("/profile")}
               className="btn btn-block xl:w-auto dark:btn-neutral"
             >
               Discard Changes
             </button>
             <button
               onClick={() => {
-                navigate('/profile');
-                toast('Gabisa diedit dong!', { icon: '😛' });
+                navigate("/profile");
+                toast("Gabisa diedit dong!", { icon: "😛" });
               }}
               className="btn btn-block xl:w-auto btn-primary"
             >
@@ -77,7 +77,7 @@ const EditProfile = () => {
                 <img
                   src={
                     preview ||
-                    'https://avatars.githubusercontent.com/u/74099030?v=4'
+                    "https://avatars.githubusercontent.com/u/74099030?v=4"
                   }
                   alt="foto-cowok-ganteng"
                 />
@@ -115,34 +115,26 @@ const EditProfile = () => {
               {/* row 1 */}
               <div className="w-full grid xl:grid-cols-3 2xl:grid-cols-4 items-center gap-1 xl:gap-0">
                 <div className="w-full whitespace-nowrap">
-                  <span className="whitespace-nowrap">
-                    First Name*
-                  </span>
+                  <span className="whitespace-nowrap">First Name*</span>
                 </div>
                 <input
                   type="text"
                   placeholder="Type here"
                   value={firstName}
-                  onChange={(element) =>
-                    setFirstName(element.target.value)
-                  }
+                  onChange={(element) => setFirstName(element.target.value)}
                   className="input input-bordered w-full col-span-2 2xl:col-span-3"
                 />
               </div>
               {/* row 2 */}
               <div className="w-full grid xl:grid-cols-3 2xl:grid-cols-4 items-center gap-1 xl:gap-0">
                 <div className="w-full whitespace-nowrap">
-                  <span className="whitespace-nowrap">
-                    Last Name*
-                  </span>
+                  <span className="whitespace-nowrap">Last Name*</span>
                 </div>
                 <input
                   type="text"
                   placeholder="Type here"
                   value={lastName}
-                  onChange={(element) =>
-                    setLastName(element.target.value)
-                  }
+                  onChange={(element) => setLastName(element.target.value)}
                   className="input input-bordered w-full col-span-2 2xl:col-span-3"
                 />
               </div>
@@ -155,9 +147,7 @@ const EditProfile = () => {
                   type="text"
                   placeholder="Type here"
                   value={nickName}
-                  onChange={(element) =>
-                    setNickName(element.target.value)
-                  }
+                  onChange={(element) => setNickName(element.target.value)}
                   className="input input-bordered w-full col-span-2 2xl:col-span-3"
                 />
               </div>
@@ -173,9 +163,7 @@ const EditProfile = () => {
                   type="text"
                   placeholder="Type here"
                   value={email}
-                  onChange={(element) =>
-                    setEmail(element.target.value)
-                  }
+                  onChange={(element) => setEmail(element.target.value)}
                   className="input input-bordered w-full col-span-2 2xl:col-span-3"
                 />
               </div>
@@ -188,9 +176,7 @@ const EditProfile = () => {
                   type="text"
                   placeholder="Type here"
                   value={phone}
-                  onChange={(element) =>
-                    setPhone(element.target.value)
-                  }
+                  onChange={(element) => setPhone(element.target.value)}
                   className="input input-bordered w-full col-span-2 2xl:col-span-3"
                 />
               </div>
@@ -203,9 +189,7 @@ const EditProfile = () => {
                   className="textarea textarea-bordered w-full col-span-2 2xl:col-span-3"
                   placeholder="Address"
                   value={address}
-                  onChange={(element) =>
-                    setAddress(element.target.value)
-                  }
+                  onChange={(element) => setAddress(element.target.value)}
                 ></textarea>
                 {/* <input
                   type="text"
@@ -243,8 +227,7 @@ const EditProfile = () => {
               <div className="w-full h-[2px] bg-base-300 dark:bg-slate-700 mt-1"></div>
             </div>
             <span className="text-sm xl:text-sm text-neutral-400 dark:text-neutral-content">
-              Authorize faster and easier with your external service
-              account.
+              Authorize faster and easier with your external service account.
             </span>
           </div>
           {/* services block */}
@@ -253,8 +236,8 @@ const EditProfile = () => {
             <div className="col-span-2 flex flex-col items-start gap-5 xl:w-[240px]">
               <button
                 onClick={() =>
-                  toast('Gaboleh', {
-                    icon: '😠',
+                  toast("Gaboleh", {
+                    icon: "😠",
                   })
                 }
                 className="btn btn-block btn-disabled flex-nowrap justify-start"
@@ -269,19 +252,15 @@ const EditProfile = () => {
                 </span>
               </button>
               <div className="px-4 gap-2 min-h-12 text-sm font-semibold flex items-center justify-start">
-                <img
-                  className="w-6"
-                  src="/icons8-google.svg"
-                  alt="google"
-                />
+                <img className="w-6" src="/icons8-google.svg" alt="google" />
                 <span className="text-start whitespace-nowrap text-xs xl:text-sm">
                   Connected with Google
                 </span>
               </div>
               <button
                 onClick={() =>
-                  toast('Gaboleh', {
-                    icon: '😠',
+                  toast("Gaboleh", {
+                    icon: "😠",
                   })
                 }
                 className="btn btn-block btn-disabled justify-start"
@@ -306,8 +285,8 @@ const EditProfile = () => {
               <button className="btn btn-ghost text-error"></button>
               <button
                 onClick={() =>
-                  toast('Gaboleh', {
-                    icon: '😠',
+                  toast("Gaboleh", {
+                    icon: "😠",
                   })
                 }
                 className="btn btn-ghost btn-disabled text-error text-xs xl:text-sm"
@@ -327,23 +306,17 @@ const EditProfile = () => {
             <HiOutlineTrash className="text-lg" />
             Delete My Account
           </button>
-          <dialog
-            id="modal_delete"
-            className="modal"
-            ref={modalDelete}
-          >
+          <dialog id="modal_delete" className="modal" ref={modalDelete}>
             <div className="modal-box">
               <h3 className="font-bold text-lg dark:text-white">
                 Action Confirmation!
               </h3>
-              <p className="py-4">
-                Do you want to delete your account?
-              </p>
+              <p className="py-4">Do you want to delete your account?</p>
               <div className="modal-action mx-0 flex-col items-stretch justify-stretch gap-3">
                 <button
                   onClick={() =>
-                    toast('Lancang kamu ya!', {
-                      icon: '😠',
+                    toast("Lancang kamu ya!", {
+                      icon: "😠",
                     })
                   }
                   className="btn btn-error btn-block text-base-100 dark:text-white"

@@ -36,9 +36,9 @@ const Estoques = () => {
   ];
 
   React.useEffect(() => {
-    if (isLoading) toast.loading("Carregando...", { id: "estoques" });
-    if (isError) toast.error("Erro ao buscar dados!", { id: "estoques" });
-    if (isSuccess) toast.success("Dados carregados!", { id: "estoques" });
+    if (isLoading) toast.loading("Carregando estoques...", { id: "estoques" });
+    if (isError) toast.error("Erro ao buscar estoques!", { id: "estoques" });
+    if (isSuccess) toast.success("Estoques carregados!", { id: "estoques" });
   }, [isLoading, isError, isSuccess]);
 
   return (
@@ -50,19 +50,40 @@ const Estoques = () => {
               Estoques
             </h2>
             {data && data.length > 0 && (
-              <span className="text-neutral-content font-medium">
-                {data.length} encontrados
+              <span className="text-neutral dark:text-neutral-content font-medium text-base">
+                {data.length} registros encontrados
               </span>
             )}
           </div>
         </div>
 
-        <DataTable
-          slug="estoques"
-          columns={columns}
-          rows={data || []}
-          includeActionColumn={true}
-        />
+        {isLoading ? (
+          <DataTable
+            slug="estoques"
+            columns={columns}
+            rows={[]}
+            includeActionColumn={true}
+          />
+        ) : isSuccess ? (
+          <DataTable
+            slug="estoques"
+            columns={columns}
+            rows={data}
+            includeActionColumn={true}
+          />
+        ) : (
+          <>
+            <DataTable
+              slug="estoques"
+              columns={columns}
+              rows={[]}
+              includeActionColumn={true}
+            />
+            <div className="w-full flex justify-center mt-2 text-error font-semibold">
+              Erro ao carregar os dados dos estoques.
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

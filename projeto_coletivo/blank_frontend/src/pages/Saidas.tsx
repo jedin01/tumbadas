@@ -4,8 +4,11 @@ import DataTable from "../components/DataTable";
 import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { fetchSaidas } from "../api/ApiCollection";
+import AddData from "../components/AddData";
 
 const Saidas = () => {
+  const [isOpen, setIsOpen] = React.useState(false);
+
   const { isLoading, isError, isSuccess, data } = useQuery({
     queryKey: ["saidas"],
     queryFn: fetchSaidas,
@@ -36,9 +39,9 @@ const Saidas = () => {
   ];
 
   React.useEffect(() => {
-    if (isLoading) toast.loading("Carregando...", { id: "saidas" });
-    if (isError) toast.error("Erro ao buscar dados!", { id: "saidas" });
-    if (isSuccess) toast.success("Dados carregados!", { id: "saidas" });
+    if (isLoading) toast.loading("Carregando saídas...", { id: "saidas" });
+    if (isError) toast.error("Erro ao buscar saídas!", { id: "saidas" });
+    if (isSuccess) toast.success("Saídas carregadas!", { id: "saidas" });
   }, [isLoading, isError, isSuccess]);
 
   return (
@@ -55,14 +58,46 @@ const Saidas = () => {
               </span>
             )}
           </div>
+
+          <button
+            onClick={() => setIsOpen(true)}
+            className={`btn ${isLoading ? "btn-disabled" : "btn-primary"}`}
+          >
+            Adicionar Saída +
+          </button>
         </div>
 
-        <DataTable
-          slug="saidas"
-          columns={columns}
-          rows={data || []}
-          includeActionColumn={true}
-        />
+        {isLoading ? (
+          <DataTable
+            slug="saidas"
+            columns={columns}
+            rows={[]}
+            includeActionColumn={true}
+          />
+        ) : isSuccess ? (
+          <DataTable
+            slug="saida"
+            columns={columns}
+            rows={data}
+            includeActionColumn={true}
+          />
+        ) : (
+          <>
+            <DataTable
+              slug="saidas"
+              columns={columns}
+              rows={[]}
+              includeActionColumn={true}
+            />
+            <div className="w-full flex justify-center mt-2 text-error font-semibold">
+              Erro ao carregar dados das saídas.
+            </div>
+          </>
+        )}
+
+        {isOpen && (
+          <AddData slug="saida" isOpen={isOpen} setIsOpen={setIsOpen} />
+        )}
       </div>
     </div>
   );
