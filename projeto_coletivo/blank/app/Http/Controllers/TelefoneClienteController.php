@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TelefoneCliente;
 use Illuminate\Http\Request;
 
 class TelefoneClienteController extends Controller
@@ -33,7 +34,7 @@ class TelefoneClienteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(TelefoneCliente $telefoneCliente)
     {
         //
     }
@@ -41,7 +42,7 @@ class TelefoneClienteController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(TelefoneCliente $telefoneCliente)
     {
         //
     }
@@ -49,7 +50,7 @@ class TelefoneClienteController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, TelefoneCliente $telefoneCliente)
     {
         //
     }
@@ -57,7 +58,7 @@ class TelefoneClienteController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(TelefoneCliente $telefoneCliente)
     {
         //
     }

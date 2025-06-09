@@ -1,0 +1,71 @@
+import React from "react";
+import { GridColDef } from "@mui/x-data-grid";
+import DataTable from "../components/DataTable";
+import { useQuery } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { fetchEntradas } from "../api/ApiCollection";
+
+const Entradas = () => {
+  const { isLoading, isError, isSuccess, data } = useQuery({
+    queryKey: ["entradas"],
+    queryFn: fetchEntradas,
+  });
+
+  const columns: GridColDef[] = [
+    { field: "id", headerName: "ID", width: 70 },
+    {
+      field: "produto",
+      headerName: "Produto",
+      flex: 1,
+      minWidth: 200,
+      valueGetter: (params) =>
+        params.row.produto?.nome || "Produto não disponível",
+    },
+    {
+      field: "quantidade",
+      headerName: "Quantidade",
+      flex: 1,
+      minWidth: 150,
+    },
+    {
+      field: "data",
+      headerName: "Data da Entrada",
+      flex: 1,
+      minWidth: 150,
+    },
+  ];
+
+  React.useEffect(() => {
+    if (isLoading) toast.loading("Carregando...", { id: "entradas" });
+    if (isError) toast.error("Erro ao buscar dados!", { id: "entradas" });
+    if (isSuccess) toast.success("Dados carregados!", { id: "entradas" });
+  }, [isLoading, isError, isSuccess]);
+
+  return (
+    <div className="w-full p-0 m-0">
+      <div className="w-full flex flex-col items-stretch gap-3">
+        <div className="w-full flex justify-between mb-5">
+          <div className="flex gap-1 justify-start flex-col items-start">
+            <h2 className="font-bold text-2xl xl:text-4xl text-base-content dark:text-neutral-200">
+              Entradas
+            </h2>
+            {data && data.length > 0 && (
+              <span className="text-neutral-content font-medium">
+                {data.length} encontrados
+              </span>
+            )}
+          </div>
+        </div>
+
+        <DataTable
+          slug="entradas"
+          columns={columns}
+          rows={data || []}
+          includeActionColumn={true}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default Entradas;
