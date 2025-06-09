@@ -32,6 +32,8 @@ import Entradas from "./pages/Entradas";
 import Saidas from "./pages/Saidas";
 import Vendas from "./pages/Vendas";
 import Estoques from "./pages/Estoques";
+import EditData from "./components/EditData";
+import EditDataWrapper from "./pages/EditDataWrapper";
 
 function App() {
   const Layout = () => {
@@ -88,9 +90,15 @@ function App() {
           element: <Products />,
         },
         {
-          path: "/products/:id",
+          path: "/product/:id",
           element: <Product />,
         },
+        // routes.tsx
+        {
+          path: "/product/edit/:id/",
+          element: <EditData slug="product" />,
+        },
+
         {
           path: "/orders",
           element: <Orders />,

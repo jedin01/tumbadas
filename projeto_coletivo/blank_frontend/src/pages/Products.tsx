@@ -22,33 +22,37 @@ const Products = () => {
       flex: 1,
     },
     {
+      field: "categoria",
+      headerName: "Categoria",
+      minWidth: 150,
+      flex: 1,
+      valueGetter: (params) => params.row.categoria?.nome || "Sem categoria",
+    },
+    {
       field: "descricao",
       headerName: "Descrição",
-      minWidth: 300,
-      flex: 2,
+      minWidth: 250,
+      flex: 1,
     },
     {
       field: "preco",
       headerName: "Preço",
       type: "number",
-      minWidth: 120,
+      minWidth: 100,
       flex: 1,
       valueFormatter: (params) =>
-        params.value
-          ? new Intl.NumberFormat("pt-AO", {
-              style: "currency",
-              currency: "AOA", // ou USD se preferir
-            }).format(params.value)
-          : "",
+        `Kz ${Number(params.value).toLocaleString("pt-AO", {
+          minimumFractionDigits: 2,
+        })}`,
     },
   ];
 
   React.useEffect(() => {
     if (isLoading) {
-      toast.loading("A carregar produtos...", { id: "promiseProducts" });
+      toast.loading("Carregando produtos...", { id: "promiseProducts" });
     }
     if (isError) {
-      toast.error("Erro ao buscar os produtos!", {
+      toast.error("Erro ao carregar os produtos!", {
         id: "promiseProducts",
       });
     }
@@ -81,25 +85,36 @@ const Products = () => {
           </button>
         </div>
 
-        <DataTable
-          columns={columns}
-          rows={data}
-          includeActionColumn
-          showEditButton={false}
-          onView={(id) => console.log("Visualizar:", id)}
-          onDelete={async (id) => {
-            console.log("Deletar produto", id);
-          }}
-        />
-
-        {isError && (
-          <div className="w-full flex justify-center text-red-500 mt-4">
-            Erro ao carregar os produtos!
-          </div>
+        {isLoading ? (
+          <DataTable
+            slug="produtos"
+            columns={columns}
+            rows={[]}
+            includeActionColumn={true}
+          />
+        ) : isSuccess ? (
+          <DataTable
+            slug="product"
+            columns={columns}
+            rows={data}
+            includeActionColumn={true}
+          />
+        ) : (
+          <>
+            <DataTable
+              slug="products"
+              columns={columns}
+              rows={[]}
+              includeActionColumn={true}
+            />
+            <div className="w-full flex justify-center">
+              Erro ao carregar os dados!
+            </div>
+          </>
         )}
 
         {isOpen && (
-          <AddData slug="product" isOpen={isOpen} setIsOpen={setIsOpen} />
+          <AddData slug={"product"} isOpen={isOpen} setIsOpen={setIsOpen} />
         )}
       </div>
     </div>
