@@ -195,7 +195,7 @@ export const fetchProducts = async () => {
 // GET SINGLE PRODUCT
 export const fetchSingleProduct = async (id: string) => {
   const response = await axios
-    .get(`https://react-admin-ui-v1-api.vercel.app/products/${id}`)
+    .get(`http://127.0.0.1:8000/api/produtos/${id}`)
     .then((res) => {
       console.log("axios get:", res.data);
       return res.data;

@@ -12,8 +12,59 @@ const Vendas = () => {
   });
 
   const columns: GridColDef[] = [
-    // Defina as colunas aqui, exemplo:
-    { field: "id", headerName: "ID", width: 70 }
+    { field: "id", headerName: "ID", width: 70 },
+    {
+      field: "funcionario",
+      headerName: "Funcionário",
+      flex: 1,
+      minWidth: 150,
+      valueGetter: (params) =>
+        `${params.row.funcionario?.pNome || ""} ${params.row.funcionario?.uNome || ""}`,
+    },
+    {
+      field: "cliente",
+      headerName: "Cliente",
+      flex: 1,
+      minWidth: 150,
+      valueGetter: (params) =>
+        `${params.row.cliente?.pNome || ""} ${params.row.cliente?.uNome || ""}`,
+    },
+    {
+      field: "produtos",
+      headerName: "Produtos Vendidos",
+      flex: 2,
+      minWidth: 250,
+      valueGetter: (params) =>
+        params.row.itens
+          ?.map(
+            (item) => `${item.quantidade}x ${item.produto?.nome || "Produto"}`,
+          )
+          .join(", ") || "Nenhum produto",
+    },
+    {
+      field: "investimento",
+      headerName: "Investimento",
+      flex: 1,
+      minWidth: 130,
+    },
+    {
+      field: "valorTotal",
+      headerName: "Valor Total",
+      flex: 1,
+      minWidth: 130,
+    },
+    {
+      field: "troco",
+      headerName: "Troco",
+      flex: 1,
+      minWidth: 100,
+    },
+    {
+      field: "data",
+      headerName: "Data da Venda",
+      flex: 1,
+      minWidth: 130,
+    },
   ];
 
   React.useEffect(() => {

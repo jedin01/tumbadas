@@ -17,7 +17,7 @@ const Products = () => {
     { field: "id", headerName: "ID", width: 90 },
     {
       field: "img",
-      headerName: "Produto",
+      headerName: "Product",
       minWidth: 300,
       flex: 1,
       renderCell: (params) => {
@@ -30,35 +30,51 @@ const Products = () => {
                 className="object-cover"
               />
             </div>
-            <span className="mb-0 pb-0 leading-none">{params.row.nome}</span>
+            <span className="mb-0 pb-0 leading-none">{params.row.title}</span>
           </div>
         );
       },
     },
+    // {
+    //   field: 'title',
+    //   type: 'string',
+    //   headerName: 'Title',
+    //   width: 250,
+    // },
     {
-      field: "descricao",
-      headerName: "Descrição",
-      minWidth: 250,
-      flex: 1,
-    },
-    {
-      field: "categoriaNome",
-      headerName: "Categoria",
-      minWidth: 150,
-      flex: 1,
-      valueGetter: (params) => params.row.categoria?.nome || "",
-    },
-    {
-      field: "preco",
-      headerName: "Preço",
+      field: "color",
+      type: "string",
+      headerName: "Color",
       minWidth: 100,
       flex: 1,
-      valueFormatter: (params) =>
-        Number(params.value).toLocaleString("pt-AO", {
-          style: "currency",
-          currency: "AOA",
-          minimumFractionDigits: 2,
-        }),
+    },
+    {
+      field: "price",
+      type: "string",
+      headerName: "Price",
+      minWidth: 100,
+      flex: 1,
+    },
+    {
+      field: "producer",
+      headerName: "Producer",
+      type: "string",
+      minWidth: 100,
+      flex: 1,
+    },
+    {
+      field: "createdAt",
+      headerName: "Created At",
+      minWidth: 100,
+      type: "string",
+      flex: 1,
+    },
+    {
+      field: "inStock",
+      headerName: "In Stock",
+      minWidth: 80,
+      type: "boolean",
+      flex: 1,
     },
   ];
 
@@ -102,14 +118,14 @@ const Products = () => {
 
         {isLoading ? (
           <DataTable
-            slug="products"
+            slug="produtos"
             columns={columns}
             rows={[]}
             includeActionColumn={true}
           />
         ) : isSuccess ? (
           <DataTable
-            slug="products"
+            slug="produtos"
             columns={columns}
             rows={data}
             includeActionColumn={true}
@@ -117,7 +133,7 @@ const Products = () => {
         ) : (
           <>
             <DataTable
-              slug="products"
+              slug="produtos"
               columns={columns}
               rows={[]}
               includeActionColumn={true}
@@ -129,7 +145,7 @@ const Products = () => {
         )}
 
         {isOpen && (
-          <AddData slug={"product"} isOpen={isOpen} setIsOpen={setIsOpen} />
+          <AddData slug={"produtos"} isOpen={isOpen} setIsOpen={setIsOpen} />
         )}
       </div>
     </div>

@@ -1,18 +1,18 @@
-import React from 'react';
+import React from "react";
 import {
   DataGrid,
   GridColDef,
   //   GridToolbarQuickFilter,
   GridToolbar,
   //   GridValueGetterParams,
-} from '@mui/x-data-grid';
-import { useNavigate } from 'react-router-dom';
+} from "@mui/x-data-grid";
+import { useNavigate } from "react-router-dom";
 import {
   HiOutlinePencilSquare,
   HiOutlineEye,
   HiOutlineTrash,
-} from 'react-icons/hi2';
-import toast from 'react-hot-toast';
+} from "react-icons/hi2";
+import toast from "react-hot-toast";
 
 interface DataTableProps {
   columns: GridColDef[];
@@ -30,8 +30,8 @@ const DataTable: React.FC<DataTableProps> = ({
   const navigate = useNavigate();
 
   const actionColumn: GridColDef = {
-    field: 'action',
-    headerName: 'Action',
+    field: "action",
+    headerName: "Action",
     minWidth: 200,
     flex: 1,
     renderCell: (params) => {
@@ -39,8 +39,25 @@ const DataTable: React.FC<DataTableProps> = ({
         <div className="flex items-center">
           {/* <div to={`/${props.slug}/${params.row.id}`}> */}
           <button
-            onClick={() => {
-              navigate(`/${slug}/${params.row.id}`);
+            onClick={async () => {
+              try {
+                const response = await fetch(
+                  `http://localhost:8000/api/${slug}/${params.row.id}`,
+                  {
+                    method: "GET",
+                  },
+                );
+
+                if (!response.ok) {
+                  throw new Error("Erro ao deletar o produto");
+                }
+
+                toast.success("Produto deletado com sucesso!");
+                // Aqui você pode atualizar o estado ou recarregar a lista de produtos
+              } catch (error) {
+                toast.error("Erro ao deletar o produto.");
+                console.error(error);
+              }
             }}
             className="btn btn-square btn-ghost"
           >
@@ -48,8 +65,8 @@ const DataTable: React.FC<DataTableProps> = ({
           </button>
           <button
             onClick={() => {
-              toast('Jangan diedit!', {
-                icon: '😠',
+              toast("Jangan diedit!", {
+                icon: "😠",
               });
             }}
             className="btn btn-square btn-ghost"
@@ -57,10 +74,25 @@ const DataTable: React.FC<DataTableProps> = ({
             <HiOutlinePencilSquare />
           </button>
           <button
-            onClick={() => {
-              toast('Jangan dihapus!', {
-                icon: '😠',
-              });
+            onClick={async () => {
+              try {
+                const response = await fetch(
+                  `http://localhost:8000/api/${slug}/${params.row.id}`,
+                  {
+                    method: "DELETE",
+                  },
+                );
+
+                if (!response.ok) {
+                  throw new Error("Erro ao deletar o produto");
+                }
+
+                toast.success("Produto deletado com sucesso!");
+                // Aqui você pode atualizar o estado ou recarregar a lista de produtos
+              } catch (error) {
+                toast.error("Erro ao deletar o produto.");
+                console.error(error);
+              }
             }}
             className="btn btn-square btn-ghost"
           >
@@ -78,7 +110,7 @@ const DataTable: React.FC<DataTableProps> = ({
           className="dataGrid p-0 xl:p-3 w-full bg-base-100 text-white"
           rows={rows}
           columns={[...columns, actionColumn]}
-          getRowHeight={() => 'auto'}
+          getRowHeight={() => "auto"}
           initialState={{
             pagination: {
               paginationModel: {
@@ -109,7 +141,7 @@ const DataTable: React.FC<DataTableProps> = ({
           className="dataGrid p-0 xl:p-3 w-full bg-base-100 text-white"
           rows={rows}
           columns={[...columns]}
-          getRowHeight={() => 'auto'}
+          getRowHeight={() => "auto"}
           initialState={{
             pagination: {
               paginationModel: {
