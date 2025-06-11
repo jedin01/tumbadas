@@ -450,3 +450,123 @@ export const fetchVendaProduto = async () => {
     });
   return response;
 };
+
+export const fetchSingleFuncionario = async (id: string) => {
+  const response = await axios
+    .get(`http://127.0.0.1:8000/api/funcionarios/${id}`)
+    .then((res) => {
+      console.log("axios get funcionario:", res.data);
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+      throw err;
+    });
+
+  return response;
+};
+
+export const fetchSingleCliente = async (id: string) => {
+  const response = await axios
+    .get(`http://127.0.0.1:8000/api/clientes/${id}`)
+    .then((res) => {
+      console.log("axios get cliente:", res.data);
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+      throw err;
+    });
+
+  return response;
+};
+
+export const fetchSingleFornecedor = async (id: string) => {
+  const response = await axios
+    .get(`http://127.0.0.1:8000/api/fornecedores/${id}`)
+    .then((res) => {
+      console.log("axios get fornecedor:", res.data);
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+      throw err;
+    });
+
+  return response;
+};
+
+export const fetchSingleCategoria = async (id: string) => {
+  const response = await axios
+    .get(`http://127.0.0.1:8000/api/categorias/${id}`)
+    .then((res) => {
+      console.log("axios get categoria:", res.data);
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+      throw err;
+    });
+
+  return response;
+};
+
+export const fetchSingleEstoque = async (id: string) => {
+  const response = await axios
+    .get(`http://127.0.0.1:8000/api/estoques/${id}`)
+    .then((res) => {
+      console.log("axios get estoque:", res.data);
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+      throw err;
+    });
+
+  return response;
+};
+
+export const fetchSingleEntrada = async (id: string) => {
+  const response = await axios
+    .get(`http://127.0.0.1:8000/api/entradas/${id}`)
+    .then((res) => {
+      console.log("axios get entrada:", res.data);
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+      throw err;
+    });
+
+  return response;
+};
+
+export const fetchSingleSaida = async (id: string) => {
+  const response = await axios
+    .get(`http://127.0.0.1:8000/api/saidas/${id}`)
+    .then((res) => {
+      console.log("axios get saida:", res.data);
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+      throw err;
+    });
+
+  return response;
+};
+
+export const fetchSingleVenda = async (id: string) => {
+  const response = await axios
+    .get(`http://127.0.0.1:8000/api/vendas/${id}`)
+    .then((res) => {
+      console.log("axios get venda:", res.data);
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+      throw err;
+    });
+
+  return response;
+};
