@@ -1,5 +1,4 @@
 .env
 docker-compose.yml
-/group_project
 /node_modules
 /vendor
