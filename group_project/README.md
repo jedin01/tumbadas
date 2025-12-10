@@ -15,8 +15,8 @@ Algures na cidade de Luanda, muncípio de Viana, certa farmâcia tem enfrentado 
 **estoques** (id, idProduto, quantidade, quantidadeVendida); </br>
 **entradas** (id, idProduto, idFornecedor, quantidade, data) </br>
 **saidas** (id, idProduto, quantidade, data) </br>
-**vendas** (id, idFuncionario, idCliente, investimento, valorTotal, troco, data) </br>
-**vendaProduto** (id, idvenda, idProduto, quantidade, precoUnitario) </br>
+**vendas** (id, idFuncionario, idCliente, investimento, data) </br>
+**vendaProduto** (id, idvenda, idProduto, quantidade) </br>
 
 
 ## Normalização
