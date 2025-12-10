@@ -1,0 +1,3 @@
+[submodule "group_project"]
+	path = group_project
+	url = https://github.com/jedin01/aimi
