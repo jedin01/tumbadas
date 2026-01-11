@@ -1,0 +1,137 @@
+-- Intro
+
+As anomalias ocorrem ao nível das operações de insert, update e delete, devido a problemas na estrutura das tabelas.
+
+Insert Anomaly – quando novas tuplas criam dados duplicados ou quando certos factos não podem ser gravados.
+Exemplo numa tabela venda_produto com os atributos id, id_venda, id_cliente, id_produto, data, quantidade:
+inserir uma tupla com ausência de dados como id_venda e id_cliente gera uma anomalia.
+Ou então double-entry (duplicação) de tuplas.
+
+Update Anomaly – quando a estrutura de uma tabela força a atualização de registos em cascata.
+Com tuplas do mesmo id_produto, sou forçado a atualizar todas as tuplas com esse id_produto.
+
+Delete Anomaly – quando a eliminação de tuplas constitui perda de dados importantes.
+Apagar o registo com id_venda = 4 elimina todos os registos com o mesmo id_venda, perdendo informações associadas à compra desse cliente.
+
+---
+
+-- Normalização
+
+Normalização de dados – processo de melhoria da estrutura lógica de uma relação ou tabela para evitar anomalias.
+
+Ao normalizar dados:
+
+1. Evitamos duplicações e conservamos dados;
+2. Satisfazemos certas regras de integridade referencial (uma tupla numa tabela pode ser referenciada por, pelo menos, uma linha noutra tabela);
+3. Facilitamos a manutenção dos dados ao eliminar anomalias de inserção, atualização e deleção;
+4. Permitimos escalabilidade futura.
+
+Para entender a normalização, é preciso entender DFs (Dependências Funcionais).
+
+---
+
+-- Dependências Funcionais
+
+Dependência Funcional – o valor de um determinante decide o valor de outro atributo (dependente).
+
+As DFs especificam regras de integridade (ex.: chaves candidatas) de uma tabela ou relação.
+
+As DFs são representadas por A → B, ou seja,
+"B é funcionalmente dependente de A" ou "A determina funcionalmente B".
+
+Se souberes o valor de A, consegues determinar B.
+Para cada valor de A, só existe um valor de B.
+Se A for igual, B também será igual.
+A identifica B de forma única.
+
+Ex.:
+id_cliente → nome
+(529 → AbnerLouren)
+
+Só existe uma pessoa com esse id_cliente.
+Mas o contrário não é verdade.
+nome → id_cliente? Não.
+AbnerLouren → 527, 728, 108.
+
+O determinante (A) numa DF: se tiver o seu valor, só chego a um único valor do seu dependente (B).
+
+---
+
+-- Tipos de Dependências Funcionais
+
+Dependência Funcional Total – o determinante é um grupo de atributos chave (chaves primárias compostas) que determina funcionalmente atributos dependentes.
+B é funcionalmente dependente de A (grupo de atributos), mas não de um subconjunto de A.
+
+Ex.:
+(id_venda, id_produto) → quantidade
+
+Dependência Funcional Parcial – os atributos dependentes são funcionalmente dependentes de um subconjunto da chave primária.
+
+Ex.:
+id_venda → data_venda, id_cliente
+
+Dependência Funcional Transitiva – um atributo não-chave depende indiretamente da chave primária, passando por outro atributo não-chave.
+Quando A → B → C, existe uma dependência transitiva A → C (via B).
+
+---
+
+-- Dica
+
+Como identificar uma chave primária?
+
+1. Identifica todas as chaves candidatas olhando para os determinantes;
+2. Determina qual das candidatas não é funcionalmente dependente de outra chave candidata.
+   Essa será a chave primária.
+
+---
+
+-- Cálculo de Fecho
+
+O fecho de um conjunto de atributos X, denotado por X⁺, é o conjunto de todos os atributos que podem ser determinados a partir de X, usando um conjunto de dependências funcionais F.
+
+---
+
+--- Para que serve o fecho?
+
+O cálculo do fecho serve para:
+
+1. Verificar se um atributo é superchave;
+2. Verificar se um atributo é chave candidata;
+3. Verificar se uma DF A → B é válida;
+4. Apoiar a normalização.
+
+---
+
+--- Algoritmo para o cálculo de fecho
+
+1. Inicialização:
+   X⁺ = X
+
+2. Aplicação das DFs. Para cada dependência funcional A → B:
+
+   Se:
+   A ⊆ X⁺
+
+   Então:
+   X⁺ = X⁺ ∪ B
+
+3. Repetir até não ser possível adicionar novos atributos.
+
+---
+
+-- Dicas
+
+"→" lê-se: determina ou determina funcionalmente.
+O lado esquerdo identifica unicamente o lado direito.
+Ex.: A → B.
+
+"∈" lê-se: pertence a.
+Ex.: X → Y ∈ F⁺.
+"X determina Y pertence ao fecho de F".
+
+"⊆" lê-se: está contido em ou é subconjunto de.
+Ex.: Y ⊆ X⁺.
+"Y está contido no fecho de X".
+
+"X⁺" lê-se: fecho de X.
+"Todos os atributos que podem ser determinados a partir de X".
